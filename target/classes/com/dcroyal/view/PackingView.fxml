@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<!--
+    PackingView.fxml
+    Order Packing, Delivery Slip Generation, and Customer Auto-SMS Notification Screen
+    Controller: com.dcroyal.controller.PackingController
+-->
+<BorderPane
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.dcroyal.controller.PackingController"
+    style="-fx-background-color: #F6F3EC;">
+
+    <!-- Left Sidebar -->
+    <left>
+        <fx:include source="Sidebar.fxml" fx:id="sidebar"/>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <BorderPane style="-fx-background-color: #F6F3EC;">
+
+            <!-- Top Header -->
+            <top>
+                <HBox alignment="CENTER_LEFT" spacing="16"
+                      style="-fx-padding: 22 32 10 32; -fx-background-color: #F6F3EC;">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="DISPATCH &amp; PACKAGING"
+                               style="-fx-font-size: 11px; -fx-font-weight: 700; -fx-text-fill: #62656F; -fx-letter-spacing: 1px;"/>
+                        <Label text="Packing &amp; Delivery Management"
+                               style="-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                    </VBox>
+
+                    <Button text="🔄  Refresh" onAction="#handleRefresh" prefHeight="36"
+                            style="-fx-background-color: #EBE7DF; -fx-text-fill: #15171F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-cursor: hand;"/>
+                </HBox>
+            </top>
+
+            <!-- Center Content -->
+            <center>
+                <VBox spacing="14" style="-fx-padding: 0 32 24 32; -fx-background-color: #F6F3EC;">
+
+                    <!-- ROW 1: 4 KPI CARDS -->
+                    <HBox spacing="16">
+
+                        <!-- KPI 1: Ready to Pack -->
+                        <VBox spacing="4" HBox.hgrow="ALWAYS"
+                              style="
+                                  -fx-background-color: white;
+                                  -fx-background-radius: 14;
+                                  -fx-border-color: #E6E0D3;
+                                  -fx-border-radius: 14;
+                                  -fx-border-width: 1;
+                                  -fx-padding: 14 16;
+                                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+                            <Label text="Ready to Pack" style="-fx-font-size: 11px; -fx-text-fill: #62656F; -fx-font-weight: 600;"/>
+                            <Label fx:id="readyToPackCountLabel" text="0" style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #F5B800;"/>
+                            <Label text="Printed orders awaiting boxing" style="-fx-font-size: 11px; -fx-text-fill: #07768F;"/>
+                        </VBox>
+
+                        <!-- KPI 2: Packed Today -->
+                        <VBox spacing="4" HBox.hgrow="ALWAYS"
+                              style="
+                                  -fx-background-color: white;
+                                  -fx-background-radius: 14;
+                                  -fx-border-color: #E6E0D3;
+                                  -fx-border-radius: 14;
+                                  -fx-border-width: 1;
+                                  -fx-padding: 14 16;
+                                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+                            <Label text="Packed Done Today" style="-fx-font-size: 11px; -fx-text-fill: #62656F; -fx-font-weight: 600;"/>
+                            <Label fx:id="packedTodayCountLabel" text="0" style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #1A7A46;"/>
+                            <Label text="Completed by packing team" style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #1A7A46;"/>
+                        </VBox>
+
+                        <!-- KPI 3: Total Packed All Time -->
+                        <VBox spacing="4" HBox.hgrow="ALWAYS"
+                              style="
+                                  -fx-background-color: white;
+                                  -fx-background-radius: 14;
+                                  -fx-border-color: #E6E0D3;
+                                  -fx-border-radius: 14;
+                                  -fx-border-width: 1;
+                                  -fx-padding: 14 16;
+                                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+                            <Label text="Total Packed (All-Time)" style="-fx-font-size: 11px; -fx-text-fill: #62656F; -fx-font-weight: 600;"/>
+                            <Label fx:id="totalPackedCountLabel" text="0" style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #07768F;"/>
+                            <Label text="Archived dispatch records" style="-fx-font-size: 11px; -fx-text-fill: #62656F;"/>
+                        </VBox>
+
+                        <!-- KPI 4: Out for Delivery -->
+                        <VBox spacing="4" HBox.hgrow="ALWAYS"
+                              style="
+                                  -fx-background-color: white;
+                                  -fx-background-radius: 14;
+                                  -fx-border-color: #E6E0D3;
+                                  -fx-border-radius: 14;
+                                  -fx-border-width: 1;
+                                  -fx-padding: 14 16;
+                                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+                            <Label text="Out for Delivery" style="-fx-font-size: 11px; -fx-text-fill: #62656F; -fx-font-weight: 600;"/>
+                            <Label fx:id="outForDeliveryCountLabel" text="0" style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #14161F;"/>
+                            <Label text="With delivery drivers" style="-fx-font-size: 11px; -fx-text-fill: #07768F;"/>
+                        </VBox>
+
+                    </HBox>
+
+                    <!-- ROW 2: TABPANE -->
+                    <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS"
+                             style="-fx-background-color: transparent;">
+
+                        <!-- ============================================== -->
+                        <!-- TAB 1: READY TO PACK ORDERS                    -->
+                        <!-- ============================================== -->
+                        <Tab text="📦  Orders Ready to Pack">
+                            <HBox spacing="16" style="-fx-padding: 14 0 0 0;">
+
+                                <!-- LEFT TABLE CARD -->
+                                <VBox spacing="12" HBox.hgrow="ALWAYS"
+                                      style="
+                                          -fx-background-color: white;
+                                          -fx-background-radius: 14;
+                                          -fx-border-color: #E6E0D3;
+                                          -fx-border-radius: 14;
+                                          -fx-border-width: 1;
+                                          -fx-padding: 18;
+                                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+
+                                    <HBox spacing="10" alignment="CENTER_LEFT">
+                                        <Label text="Orders Awaiting Packaging"
+                                               style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                                        <Region HBox.hgrow="ALWAYS"/>
+                                        <TextField fx:id="searchReadyField" promptText="🔍  Search by order #, customer or city..."
+                                                   prefWidth="300" prefHeight="34"
+                                                   style="-fx-border-color: #E6E0D3; -fx-border-radius: 6; -fx-padding: 0 10;"/>
+                                    </HBox>
+
+                                    <Separator style="-fx-padding: 2 0;"/>
+
+                                    <TableView fx:id="readyTable" VBox.vgrow="ALWAYS" prefHeight="380"
+                                               style="-fx-background-color: transparent; -fx-border-color: #E6E0D3; -fx-border-radius: 8;">
+                                        <columns>
+                                            <TableColumn fx:id="colOrderNumber" text="Order #" prefWidth="110"/>
+                                            <TableColumn fx:id="colCustomer" text="Customer" prefWidth="140"/>
+                                            <TableColumn fx:id="colPhone" text="Phone" prefWidth="105"/>
+                                            <TableColumn fx:id="colDelivery" text="Type" prefWidth="110"/>
+                                            <TableColumn fx:id="colCity" text="Destination City" prefWidth="115"/>
+                                            <TableColumn fx:id="colDueDate" text="Due Date" prefWidth="95"/>
+                                            <TableColumn fx:id="colStatus" text="Order Status" prefWidth="130"/>
+                                        </columns>
+                                        <columnResizePolicy>
+                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                        </columnResizePolicy>
+                                    </TableView>
+
+                                </VBox>
+
+                                <!-- RIGHT ACTION PANEL -->
+                                <VBox spacing="14" prefWidth="350" minWidth="320"
+                                      style="
+                                          -fx-background-color: white;
+                                          -fx-background-radius: 14;
+                                          -fx-border-color: #E6E0D3;
+                                          -fx-border-radius: 14;
+                                          -fx-border-width: 1;
+                                          -fx-padding: 18;
+                                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+
+                                    <Label text="Packing &amp; Dispatch Action"
+                                           style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+
+                                    <!-- Selected Order Info -->
+                                    <VBox spacing="6"
+                                          style="-fx-background-color: #F6F3EC; -fx-background-radius: 10; -fx-padding: 12;">
+                                        <Label text="TARGET DISPATCH ORDER"
+                                               style="-fx-font-size: 10px; -fx-font-weight: 700; -fx-text-fill: #9DA1B0; -fx-letter-spacing: 1px;"/>
+                                        <Label fx:id="selectedOrderLabel" text="No order selected"
+                                               style="-fx-font-size: 15px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                                        <Label fx:id="selectedCustomerLabel" text="-" wrapText="true"
+                                               style="-fx-font-size: 12px; -fx-text-fill: #62656F;"/>
+                                        <Label fx:id="selectedAddressLabel" text="-" wrapText="true"
+                                               style="-fx-font-size: 11px; -fx-text-fill: #07768F; -fx-font-weight: 600;"/>
+                                    </VBox>
+
+                                    <!-- Package Count & Weight -->
+                                    <HBox spacing="10">
+                                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                            <Label text="Packages Count *" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                            <TextField fx:id="packageCountField" text="1" prefHeight="34"
+                                                       style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                        </VBox>
+                                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                            <Label text="Total Weight (kg)" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                            <TextField fx:id="weightField" text="1.0" prefHeight="34"
+                                                       style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                        </VBox>
+                                    </HBox>
+
+                                    <!-- Packing Notes -->
+                                    <VBox spacing="4">
+                                        <Label text="Packaging Notes / Instructions" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                        <TextField fx:id="packingNotesField" promptText="e.g. Fragile glass sticker, Box 2 of 2" prefHeight="34"
+                                                   style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                    </VBox>
+
+                                    <!-- Complete Packing Button -->
+                                    <Button fx:id="packOrderButton" text="📦   Complete Packing &amp; Auto-SMS" disable="true"
+                                            maxWidth="Infinity" prefHeight="44"
+                                            onAction="#handlePackOrder"
+                                            style="
+                                                -fx-background-color: #1A7A46;
+                                                -fx-text-fill: white;
+                                                -fx-font-weight: 700;
+                                                -fx-font-size: 13px;
+                                                -fx-background-radius: 8;
+                                                -fx-cursor: hand;"/>
+
+                                    <!-- Print Slip Button -->
+                                    <Button fx:id="printSlipButton" text="📄   Print Packing &amp; Routing Slip" disable="true"
+                                            maxWidth="Infinity" prefHeight="36"
+                                            onAction="#handlePrintSlip"
+                                            style="-fx-background-color: #07768F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"/>
+
+                                    <!-- SMS Info Badge -->
+                                    <VBox spacing="4"
+                                          style="-fx-background-color: #EBF8FF; -fx-background-radius: 8; -fx-padding: 10; -fx-border-color: #BEE3F8; -fx-border-radius: 8;">
+                                        <Label text="📲 Auto-SMS Notification:" style="-fx-font-size: 11px; -fx-font-weight: 700; -fx-text-fill: #2B6CB0;"/>
+                                        <Label text="Packing confirmation sends an automated SMS alert directly to the customer's phone number with order details." wrapText="true"
+                                               style="-fx-font-size: 11px; -fx-text-fill: #2B6CB0;"/>
+                                    </VBox>
+
+                                </VBox>
+
+                            </HBox>
+                        </Tab>
+
+                        <!-- ============================================== -->
+                        <!-- TAB 2: PACKING RECORDS & AUDIT TRAIL           -->
+                        <!-- ============================================== -->
+                        <Tab text="📋  Packing Records &amp; History">
+                            <VBox spacing="12" style="
+                                      -fx-background-color: white;
+                                      -fx-background-radius: 14;
+                                      -fx-border-color: #E6E0D3;
+                                      -fx-border-radius: 14;
+                                      -fx-border-width: 1;
+                                      -fx-padding: 18;
+                                      -fx-margin: 14 0 0 0;
+                                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Label text="Historical Packaging &amp; Dispatch Records"
+                                           style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                    <TextField fx:id="searchHistoryField" promptText="🔍  Search records by order #, customer or staff..."
+                                               prefWidth="340" prefHeight="34"
+                                               style="-fx-border-color: #E6E0D3; -fx-border-radius: 6; -fx-padding: 0 10;"/>
+                                </HBox>
+
+                                <Separator style="-fx-padding: 2 0;"/>
+
+                                <TableView fx:id="historyTable" VBox.vgrow="ALWAYS" prefHeight="400"
+                                           style="-fx-background-color: transparent; -fx-border-color: #E6E0D3; -fx-border-radius: 8;">
+                                    <columns>
+                                        <TableColumn fx:id="colPackId" text="Pack ID" prefWidth="70"/>
+                                        <TableColumn fx:id="colHistOrder" text="Order #" prefWidth="120"/>
+                                        <TableColumn fx:id="colHistCustomer" text="Customer" prefWidth="160"/>
+                                        <TableColumn fx:id="colHistStaff" text="Packed By" prefWidth="130"/>
+                                        <TableColumn fx:id="colHistCount" text="Packages" prefWidth="75"/>
+                                        <TableColumn fx:id="colHistWeight" text="Weight (kg)" prefWidth="85"/>
+                                        <TableColumn fx:id="colHistNotes" text="Notes" prefWidth="180"/>
+                                        <TableColumn fx:id="colHistDate" text="Date &amp; Time" prefWidth="130"/>
+                                    </columns>
+                                    <columnResizePolicy>
+                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                    </columnResizePolicy>
+                                </TableView>
+
+                            </VBox>
+                        </Tab>
+
+                    </TabPane>
+
+                </VBox>
+            </center>
+
+        </BorderPane>
+    </center>
+
+</BorderPane>

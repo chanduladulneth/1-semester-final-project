@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<!--
+    Sidebar.fxml
+    Left sidebar panel — logo, nav menu, user card, logout button.
+    Controller: SidebarController.java
+-->
+<VBox
+    fx:id="sidebarBox"
+    prefWidth="256"
+    style="-fx-background-color: #14161F;"
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.dcroyal.controller.SidebarController">
+
+    <!-- Logo Area -->
+    <HBox spacing="12" alignment="CENTER_LEFT"
+          style="-fx-padding: 26 16 20 20;">
+
+        <!-- 4-Color Square Logo -->
+        <GridPane hgap="3" vgap="3">
+            <Pane GridPane.columnIndex="0" GridPane.rowIndex="0"
+                  prefWidth="14" prefHeight="14"
+                  style="-fx-background-color: #00AEEF; -fx-background-radius: 3;"/>
+            <Pane GridPane.columnIndex="1" GridPane.rowIndex="0"
+                  prefWidth="14" prefHeight="14"
+                  style="-fx-background-color: #EC008C; -fx-background-radius: 3;"/>
+            <Pane GridPane.columnIndex="0" GridPane.rowIndex="1"
+                  prefWidth="14" prefHeight="14"
+                  style="-fx-background-color: #FFE600; -fx-background-radius: 3;"/>
+            <Pane GridPane.columnIndex="1" GridPane.rowIndex="1"
+                  prefWidth="14" prefHeight="14"
+                  style="-fx-background-color: white; -fx-background-radius: 3;"/>
+        </GridPane>
+
+        <!-- Brand Name -->
+        <VBox spacing="2">
+            <Label text="DC Royal"
+                   style="-fx-font-size: 20px; -fx-font-weight: 700; -fx-text-fill: white;"/>
+            <Label text="PRINTING"
+                   style="-fx-font-size: 10px; -fx-text-fill: #9DA1B0; -fx-font-weight: 700;"/>
+        </VBox>
+    </HBox>
+
+    <!-- Scrollable Navigation Menu -->
+    <ScrollPane fitToWidth="true"
+                hbarPolicy="NEVER"
+                vbarPolicy="AS_NEEDED"
+                VBox.vgrow="ALWAYS"
+                styleClass="sidebar-scroll"
+                style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent; -fx-padding: 0;">
+        <VBox fx:id="navBox" spacing="2"
+              style="-fx-padding: 0 10; -fx-background-color: transparent;">
+            <!-- Nav buttons are added here dynamically in SidebarController -->
+        </VBox>
+    </ScrollPane>
+
+    <!-- User Info Card (bottom of sidebar) -->
+    <VBox style="-fx-padding: 16;">
+        <HBox spacing="10" alignment="CENTER_LEFT"
+              style="
+                  -fx-background-color: #1F2230;
+                  -fx-background-radius: 14;
+                  -fx-padding: 14;">
+
+            <!-- User Initial Circle -->
+            <Label fx:id="userInitialLabel"
+                   text="??"
+                   alignment="CENTER"
+                   prefWidth="40" prefHeight="40"
+                   style="
+                       -fx-background-color: #FFE600;
+                       -fx-background-radius: 999;
+                       -fx-text-fill: #15171F;
+                       -fx-font-weight: 700;
+                       -fx-font-size: 14px;"/>
+
+            <!-- User Name and Role -->
+            <VBox spacing="2">
+                <Label fx:id="userNameLabel"
+                       text="Loading..."
+                       style="-fx-text-fill: white; -fx-font-weight: 600; -fx-font-size: 13px;"/>
+                <Label fx:id="userRoleLabel"
+                       text=""
+                       style="-fx-text-fill: #9DA1B0; -fx-font-size: 11px;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Logout Button -->
+        <Button text="&#x27F5;  Logout"
+                maxWidth="Infinity"
+                prefHeight="40"
+                onAction="#handleLogout"
+                style="
+                    -fx-background-color: transparent;
+                    -fx-text-fill: #9DA1B0;
+                    -fx-font-size: 13px;
+                    -fx-font-weight: 600;
+                    -fx-cursor: hand;
+                    -fx-padding: 10 14;
+                    -fx-alignment: CENTER_LEFT;
+                    -fx-background-radius: 10;">
+            <VBox.margin>
+                <Insets top="8"/>
+            </VBox.margin>
+        </Button>
+    </VBox>
+
+</VBox>

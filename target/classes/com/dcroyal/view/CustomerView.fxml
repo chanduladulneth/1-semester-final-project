@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<!--
+    CustomerView.fxml
+    Customer Management Screen — Add, Edit, Delete, Search, and View Customers
+    Controller: com.dcroyal.controller.CustomerController
+-->
+<BorderPane
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.dcroyal.controller.CustomerController"
+    style="-fx-background-color: #F6F3EC;">
+
+    <!-- Left Sidebar -->
+    <left>
+        <fx:include source="Sidebar.fxml" fx:id="sidebar"/>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <BorderPane style="-fx-background-color: #F6F3EC;">
+
+            <!-- Top Header -->
+            <top>
+                <HBox alignment="CENTER_LEFT" spacing="16"
+                      style="-fx-padding: 24 32 16 32; -fx-background-color: #F6F3EC;">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="CUSTOMERS"
+                               style="-fx-font-size: 11px; -fx-font-weight: 700; -fx-text-fill: #62656F; -fx-letter-spacing: 1px;"/>
+                        <Label text="Customer Management"
+                               style="-fx-font-size: 30px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                    </VBox>
+
+                    <!-- Quick Search Bar in Top Bar -->
+                    <HBox alignment="CENTER_RIGHT" spacing="10">
+                        <TextField fx:id="searchField"
+                                   promptText="🔍  Search by name, phone or code..."
+                                   prefWidth="320" prefHeight="40"
+                                   style="
+                                       -fx-background-color: white;
+                                       -fx-background-radius: 10;
+                                       -fx-border-color: #E6E0D3;
+                                       -fx-border-radius: 10;
+                                       -fx-border-width: 1;
+                                       -fx-padding: 0 14;
+                                       -fx-font-size: 13px;"/>
+                    </HBox>
+                </HBox>
+            </top>
+
+            <!-- Center Content (Form on Left, Table on Right) -->
+            <center>
+                <HBox spacing="20"
+                      style="-fx-padding: 8 32 32 32; -fx-background-color: #F6F3EC;">
+
+                    <!-- LEFT FORM CARD -->
+                    <VBox spacing="14" prefWidth="380" minWidth="340"
+                          style="
+                              -fx-background-color: white;
+                              -fx-background-radius: 16;
+                              -fx-border-color: #E6E0D3;
+                              -fx-border-radius: 16;
+                              -fx-border-width: 1;
+                              -fx-padding: 22;
+                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 8, 0, 0, 1);">
+
+                        <!-- Form Header -->
+                        <VBox spacing="2">
+                            <Label text="Customer Details"
+                                   style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                            <Label text="Enter customer information to save or update"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #62656F;"/>
+                        </VBox>
+
+                        <Separator style="-fx-padding: 2 0;"/>
+
+                        <!-- Customer Code -->
+                        <VBox spacing="4">
+                            <Label text="Customer Code"
+                                   style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #15171F;"/>
+                            <TextField fx:id="customerCodeField" editable="false"
+                                       prefHeight="36"
+                                       style="
+                                           -fx-background-color: #F1EFEA;
+                                           -fx-background-radius: 8;
+                                           -fx-border-color: #E6E0D3;
+                                           -fx-border-radius: 8;
+                                           -fx-border-width: 1;
+                                           -fx-font-weight: 700;
+                                           -fx-text-fill: #07768F;"/>
+                        </VBox>
+
+                        <!-- Full Name -->
+                        <VBox spacing="4">
+                            <Label text="Full Name *"
+                                   style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #15171F;"/>
+                            <TextField fx:id="fullNameField" promptText="e.g. Nipun Sandeepa"
+                                       prefHeight="36"
+                                       style="
+                                           -fx-background-color: white;
+                                           -fx-background-radius: 8;
+                                           -fx-border-color: #E6E0D3;
+                                           -fx-border-radius: 8;
+                                           -fx-border-width: 1;"/>
+                        </VBox>
+
+                        <!-- Phone Number -->
+                        <VBox spacing="4">
+                            <Label text="Phone Number *"
+                                   style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #15171F;"/>
+                            <TextField fx:id="phoneField" promptText="e.g. 0771234567"
+                                       prefHeight="36"
+                                       style="
+                                           -fx-background-color: white;
+                                           -fx-background-radius: 8;
+                                           -fx-border-color: #E6E0D3;
+                                           -fx-border-radius: 8;
+                                           -fx-border-width: 1;"/>
+                        </VBox>
+
+                        <!-- Email Address -->
+                        <VBox spacing="4">
+                            <Label text="Email Address"
+                                   style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #15171F;"/>
+                            <TextField fx:id="emailField" promptText="e.g. nipun@example.com"
+                                       prefHeight="36"
+                                       style="
+                                           -fx-background-color: white;
+                                           -fx-background-radius: 8;
+                                           -fx-border-color: #E6E0D3;
+                                           -fx-border-radius: 8;
+                                           -fx-border-width: 1;"/>
+                        </VBox>
+
+                        <!-- City -->
+                        <VBox spacing="4">
+                            <Label text="City"
+                                   style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #15171F;"/>
+                            <TextField fx:id="cityField" promptText="e.g. Colombo, Kandy, Gampaha"
+                                       prefHeight="36"
+                                       style="
+                                           -fx-background-color: white;
+                                           -fx-background-radius: 8;
+                                           -fx-border-color: #E6E0D3;
+                                           -fx-border-radius: 8;
+                                           -fx-border-width: 1;"/>
+                        </VBox>
+
+                        <!-- Physical / Delivery Address -->
+                        <VBox spacing="4">
+                            <Label text="Delivery Address"
+                                   style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #15171F;"/>
+                            <TextArea fx:id="addressField" promptText="Street address for parcel delivery..."
+                                      prefRowCount="3" wrapText="true"
+                                      style="
+                                          -fx-background-color: white;
+                                          -fx-background-radius: 8;
+                                          -fx-border-color: #E6E0D3;
+                                          -fx-border-radius: 8;
+                                          -fx-border-width: 1;"/>
+                        </VBox>
+
+                        <!-- Buttons Row 1: Save & Update -->
+                        <HBox spacing="10">
+                            <Button fx:id="saveButton" text="💾  Save Customer"
+                                    HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="40"
+                                    onAction="#handleSaveCustomer"
+                                    style="
+                                        -fx-background-color: #07768F;
+                                        -fx-text-fill: white;
+                                        -fx-font-weight: 700;
+                                        -fx-font-size: 13px;
+                                        -fx-background-radius: 10;
+                                        -fx-cursor: hand;"/>
+
+                            <Button fx:id="updateButton" text="✏️  Update" disable="true"
+                                    prefWidth="100" prefHeight="40"
+                                    onAction="#handleUpdateCustomer"
+                                    style="
+                                        -fx-background-color: #FFE600;
+                                        -fx-text-fill: #15171F;
+                                        -fx-font-weight: 700;
+                                        -fx-font-size: 13px;
+                                        -fx-background-radius: 10;
+                                        -fx-cursor: hand;"/>
+                        </HBox>
+
+                        <!-- Buttons Row 2: Delete & Clear -->
+                        <HBox spacing="10">
+                            <Button fx:id="deleteButton" text="🗑️  Delete" disable="true"
+                                    HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="36"
+                                    onAction="#handleDeleteCustomer"
+                                    style="
+                                        -fx-background-color: #FFF0F4;
+                                        -fx-text-fill: #B8134F;
+                                        -fx-font-weight: 700;
+                                        -fx-font-size: 12px;
+                                        -fx-border-color: #F8B4C8;
+                                        -fx-border-radius: 8;
+                                        -fx-background-radius: 8;
+                                        -fx-cursor: hand;"/>
+
+                            <Button fx:id="clearButton" text="🔄  Clear"
+                                    prefWidth="100" prefHeight="36"
+                                    onAction="#handleClear"
+                                    style="
+                                        -fx-background-color: #EBE7DF;
+                                        -fx-text-fill: #62656F;
+                                        -fx-font-weight: 600;
+                                        -fx-font-size: 12px;
+                                        -fx-background-radius: 8;
+                                        -fx-cursor: hand;"/>
+                        </HBox>
+
+                    </VBox>
+
+                    <!-- RIGHT TABLEVIEW CARD -->
+                    <VBox spacing="14" HBox.hgrow="ALWAYS"
+                          style="
+                              -fx-background-color: white;
+                              -fx-background-radius: 16;
+                              -fx-border-color: #E6E0D3;
+                              -fx-border-radius: 16;
+                              -fx-border-width: 1;
+                              -fx-padding: 22;
+                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 8, 0, 0, 1);">
+
+                        <!-- Table Header -->
+                        <HBox alignment="CENTER_LEFT">
+                            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                                <Label text="Customer Directory"
+                                       style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                                <Label text="Click on any customer to edit or delete"
+                                       style="-fx-font-size: 12px; -fx-text-fill: #62656F;"/>
+                            </VBox>
+                        </HBox>
+
+                        <Separator style="-fx-padding: 2 0;"/>
+
+                        <!-- Customer Table -->
+                        <TableView fx:id="customerTable" VBox.vgrow="ALWAYS"
+                                   style="
+                                       -fx-background-color: transparent;
+                                       -fx-border-color: #E6E0D3;
+                                       -fx-border-radius: 10;
+                                       -fx-background-radius: 10;">
+                            <columns>
+                                <TableColumn fx:id="colCode" text="Code" prefWidth="90"/>
+                                <TableColumn fx:id="colName" text="Full Name" prefWidth="160"/>
+                                <TableColumn fx:id="colPhone" text="Phone Number" prefWidth="120"/>
+                                <TableColumn fx:id="colEmail" text="Email" prefWidth="160"/>
+                                <TableColumn fx:id="colCity" text="City" prefWidth="100"/>
+                                <TableColumn fx:id="colAddress" text="Delivery Address" prefWidth="200"/>
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
+                        </TableView>
+
+                    </VBox>
+
+                </HBox>
+            </center>
+
+        </BorderPane>
+    </center>
+
+</BorderPane>

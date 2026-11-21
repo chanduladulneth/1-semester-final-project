@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="800.0" prefWidth="1280.0"
+            style="-fx-background-color: #F6F3EC; -fx-font-family: 'Segoe UI', sans-serif;"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dcroyal.controller.UserController">
+
+    <!-- Left Navigation Sidebar -->
+    <left>
+        <fx:include source="Sidebar.fxml" />
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <VBox spacing="16.0" style="-fx-background-color: #F6F3EC;">
+            <padding>
+                <Insets bottom="20.0" left="24.0" right="24.0" top="20.0" />
+            </padding>
+
+            <!-- Top Header -->
+            <HBox alignment="CENTER_LEFT" spacing="16.0">
+                <VBox spacing="2.0">
+                    <Label style="-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                           text="System Users &amp; Access Control" />
+                    <Label style="-fx-font-size: 13px; -fx-text-fill: #62656F;"
+                           text="User account credentials, authentication, security status, and Role-Based Access Control (RBAC)" />
+                </VBox>
+                <HBox alignment="CENTER_RIGHT" spacing="12.0" HBox.hgrow="ALWAYS">
+                    <Button onAction="#handleRefresh"
+                            style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 16; -fx-font-weight: 600; -fx-text-fill: #15171F; -fx-cursor: hand;"
+                            text="🔄  Refresh Data" />
+                </HBox>
+            </HBox>
+
+            <!-- Center Content ScrollPane -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                <VBox spacing="16.0">
+
+                    <!-- ROW 1: 4 KPI CARDS -->
+                    <HBox spacing="16.0">
+                        <!-- KPI 1: Total Users -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="TOTAL USERS" />
+                                <Label style="-fx-background-color: #D8F1F7; -fx-text-fill: #07768F; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="ACCOUNTS" />
+                            </HBox>
+                            <Label fx:id="totalUsersLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Registered system accounts" />
+                        </VBox>
+
+                        <!-- KPI 2: Active Users -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="ACTIVE ACCOUNTS" />
+                                <Label style="-fx-background-color: #DAF2E3; -fx-text-fill: #1A7A46; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="ACTIVE" />
+                            </HBox>
+                            <Label fx:id="activeUsersLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #1A7A46;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Authorized for system login" />
+                        </VBox>
+
+                        <!-- KPI 3: Suspended Users -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="SUSPENDED USERS" />
+                                <Label style="-fx-background-color: #FBDDEA; -fx-text-fill: #B8134F; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="BLOCKED" />
+                            </HBox>
+                            <Label fx:id="suspendedUsersLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #B8134F;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Access temporarily revoked" />
+                        </VBox>
+
+                        <!-- KPI 4: System Roles -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="SYSTEM ROLES" />
+                                <Label style="-fx-background-color: #FFF0BF; -fx-text-fill: #6B4D00; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="RBAC" />
+                            </HBox>
+                            <Label fx:id="rolesCountLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #07768F;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Defined security privilege levels" />
+                        </VBox>
+                    </HBox>
+
+                    <!-- ROW 2: TABPANE -->
+                    <TabPane style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 14; -fx-background-radius: 14;" tabClosingPolicy="UNAVAILABLE">
+                        <tabs>
+
+                            <!-- TAB 1: USER ACCOUNTS & CREDENTIALS -->
+                            <Tab text="👤  User Accounts &amp; Credentials">
+                                <HBox spacing="18.0" style="-fx-padding: 18;">
+
+                                    <!-- LEFT: USERS TABLE -->
+                                    <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+                                        <!-- Filters Bar -->
+                                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                            <TextField fx:id="searchField" prefHeight="38.0" prefWidth="260.0"
+                                                       promptText="🔍  Search by name, email, role..."
+                                                       style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 12; -fx-font-size: 13px;" />
+
+                                            <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="Role Filter:" />
+                                            <ComboBox fx:id="roleFilterComboBox" prefHeight="38.0" prefWidth="180.0"
+                                                      style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" />
+                                        </HBox>
+
+                                        <!-- TableView -->
+                                        <TableView fx:id="userTable" prefHeight="480.0" style="-fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="colId" prefWidth="55.0" text="ID" />
+                                                <TableColumn fx:id="colName" prefWidth="180.0" text="Full Name" />
+                                                <TableColumn fx:id="colEmail" prefWidth="210.0" text="Login Email" />
+                                                <TableColumn fx:id="colRole" prefWidth="150.0" text="Role" />
+                                                <TableColumn fx:id="colStatus" prefWidth="110.0" text="Status" />
+                                                <TableColumn fx:id="colRegistered" prefWidth="150.0" text="Registered At" />
+                                            </columns>
+                                        </TableView>
+                                    </VBox>
+
+                                    <!-- RIGHT: USER ACCOUNT FORM -->
+                                    <VBox prefWidth="360.0" spacing="14.0" style="-fx-background-color: #FAF8F3; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;">
+                                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                            <Label fx:id="userAvatarLabel"
+                                                   style="-fx-background-color: #14161F; -fx-text-fill: #FFE600; -fx-font-size: 16px; -fx-font-weight: 700; -fx-padding: 10 14; -fx-background-radius: 999;"
+                                                   text="DC" />
+                                            <VBox spacing="2.0">
+                                                <Label style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                                       text="Account Management" />
+                                                <Label style="-fx-font-size: 11px; -fx-text-fill: #62656F;"
+                                                       text="Configure login credentials &amp; role" />
+                                            </VBox>
+                                        </HBox>
+
+                                        <Separator />
+
+                                        <VBox spacing="4.0">
+                                            <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="FULL NAME *" />
+                                            <TextField fx:id="nameField" prefHeight="34.0" promptText="e.g. Kasun Perera"
+                                                       style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <VBox spacing="4.0">
+                                            <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="LOGIN EMAIL *" />
+                                            <TextField fx:id="emailField" prefHeight="34.0" promptText="staff@dcroyal.lk"
+                                                       style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <VBox spacing="4.0">
+                                            <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="PASSWORD" />
+                                            <PasswordField fx:id="passwordField" prefHeight="34.0" promptText="Leave blank for '123' / keep current"
+                                                           style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <VBox spacing="4.0">
+                                            <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="SYSTEM ROLE *" />
+                                            <ComboBox fx:id="roleComboBox" maxWidth="Infinity" prefHeight="34.0"
+                                                      style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <CheckBox fx:id="activeCheckBox" selected="true" style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-padding: 6 0 0 0;" text="Active Account (Enabled)" />
+
+                                        <!-- Buttons Grid -->
+                                        <VBox spacing="8.0" style="-fx-padding: 8 0 0 0;">
+                                            <HBox spacing="8.0">
+                                                <Button fx:id="addUserButton" maxWidth="Infinity" onAction="#handleAddUser" prefHeight="38.0"
+                                                        style="-fx-background-color: #07768F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                        text="➕  Add User" HBox.hgrow="ALWAYS" />
+
+                                                <Button fx:id="updateUserButton" disable="true" maxWidth="Infinity" onAction="#handleUpdateUser" prefHeight="38.0"
+                                                        style="-fx-background-color: #14161F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                        text="💾  Update" HBox.hgrow="ALWAYS" />
+                                            </HBox>
+
+                                            <HBox spacing="8.0">
+                                                <Button fx:id="toggleSuspendButton" disable="true" maxWidth="Infinity" onAction="#handleToggleSuspend" prefHeight="34.0"
+                                                        style="-fx-background-color: white; -fx-border-color: #B8134F; -fx-text-fill: #B8134F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand;"
+                                                        text="⛔  Suspend" HBox.hgrow="ALWAYS" />
+
+                                                <Button fx:id="resetPasswordButton" disable="true" maxWidth="Infinity" onAction="#handleResetPassword" prefHeight="34.0"
+                                                        style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-text-fill: #15171F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand;"
+                                                        text="🔑  Reset Pass" HBox.hgrow="ALWAYS" />
+                                            </HBox>
+
+                                            <Button fx:id="clearFormButton" maxWidth="Infinity" onAction="#handleClearForm" prefHeight="34.0"
+                                                    style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-text-fill: #62656F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand;"
+                                                    text="🧹  Clear Form" />
+                                        </VBox>
+                                    </VBox>
+
+                                </HBox>
+                            </Tab>
+
+                            <!-- TAB 2: RBAC MATRIX & ROLE DIRECTORY -->
+                            <Tab text="🛡️  Role-Based Access Control (RBAC)">
+                                <HBox spacing="18.0" style="-fx-padding: 18;">
+
+                                    <!-- LEFT: ROLES TABLE -->
+                                    <VBox spacing="12.0" prefWidth="480.0">
+                                        <Label style="-fx-font-size: 15px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                               text="Registered System Roles" />
+
+                                        <TableView fx:id="roleTable" prefHeight="480.0" style="-fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="colRoleId" prefWidth="45.0" text="ID" />
+                                                <TableColumn fx:id="colRoleCode" prefWidth="130.0" text="Role Code" />
+                                                <TableColumn fx:id="colRoleName" prefWidth="130.0" text="Role Name" />
+                                                <TableColumn fx:id="colRoleUsers" prefWidth="65.0" text="Users" />
+                                                <TableColumn fx:id="colRoleDesc" prefWidth="200.0" text="Description" />
+                                            </columns>
+                                        </TableView>
+                                    </VBox>
+
+                                    <!-- RIGHT: VISUAL RBAC PERMISSION GUIDE -->
+                                    <VBox spacing="14.0" style="-fx-background-color: #FAF8F3; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                                        <Label style="-fx-font-size: 15px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                               text="System Role Privilege Matrix" />
+
+                                        <Label style="-fx-font-size: 12px; -fx-text-fill: #62656F;"
+                                               text="Role privileges enforced throughout DC Royal Printing desktop architecture:" />
+
+                                        <VBox spacing="8.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 14;">
+                                            <Label style="-fx-font-weight: 700; -fx-font-size: 12px; -fx-text-fill: #07768F;" text="1. OWNER (Root Administrator)" />
+                                            <Label style="-fx-font-size: 11px; -fx-text-fill: #464955;"
+                                                   text="Full unrestricted access to all 15 modules, financial approvals, salary sign-off, user administration, and system settings." wrapText="true" />
+
+                                            <Separator />
+
+                                            <Label style="-fx-font-weight: 700; -fx-font-size: 12px; -fx-text-fill: #07768F;" text="2. MANAGER (Operations)" />
+                                            <Label style="-fx-font-size: 11px; -fx-text-fill: #464955;"
+                                                   text="Customer management, order intake, staff attendance logging, payroll drafting, expense claims submission, and analytical reports." wrapText="true" />
+
+                                            <Separator />
+
+                                            <Label style="-fx-font-weight: 700; -fx-font-size: 12px; -fx-text-fill: #07768F;" text="3. COUNTER STAFF (Front Desk)" />
+                                            <Label style="-fx-font-size: 11px; -fx-text-fill: #464955;"
+                                                   text="Order creation, multi-item pricing calculator, billing, receipt printing, and customer QR card lookup." wrapText="true" />
+
+                                            <Separator />
+
+                                            <Label style="-fx-font-weight: 700; -fx-font-size: 12px; -fx-text-fill: #07768F;" text="4. DESIGNER (Artwork)" />
+                                            <Label style="-fx-font-size: 11px; -fx-text-fill: #464955;"
+                                                   text="3D, DTF, UV Flatbed, and UV Rotary design file uploads, customer artwork verification, and approval workflow." wrapText="true" />
+
+                                            <Separator />
+
+                                            <Label style="-fx-font-weight: 700; -fx-font-size: 12px; -fx-text-fill: #07768F;" text="5. PRINTER OPERATOR (Floor)" />
+                                            <Label style="-fx-font-size: 11px; -fx-text-fill: #464955;"
+                                                   text="Production print queue, job status progression (START, FINISH), and physical QR Access Card material consumption." wrapText="true" />
+
+                                            <Separator />
+
+                                            <Label style="-fx-font-weight: 700; -fx-font-size: 12px; -fx-text-fill: #07768F;" text="6. PACKING, DELIVERY, INVENTORY &amp; NETWORK ADMIN" />
+                                            <Label style="-fx-font-size: 11px; -fx-text-fill: #464955;"
+                                                   text="Dedicated role dashboards for package sealing, island-wide driver manifests with auto-SMS, stock management, and Zabbix network monitoring." wrapText="true" />
+                                        </VBox>
+                                    </VBox>
+
+                                </HBox>
+                            </Tab>
+
+                        </tabs>
+                    </TabPane>
+
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>

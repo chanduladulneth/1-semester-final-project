@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="800.0" prefWidth="1280.0"
+            style="-fx-background-color: #F6F3EC; -fx-font-family: 'Segoe UI', sans-serif;"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dcroyal.controller.EmployeeController">
+
+    <!-- Left Navigation Sidebar -->
+    <left>
+        <fx:include source="Sidebar.fxml" />
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <VBox spacing="16.0" style="-fx-background-color: #F6F3EC;">
+            <padding>
+                <Insets bottom="20.0" left="24.0" right="24.0" top="20.0" />
+            </padding>
+
+            <!-- Top Header -->
+            <HBox alignment="CENTER_LEFT" spacing="16.0">
+                <VBox spacing="2.0">
+                    <Label style="-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                           text="Employee &amp; Attendance Management" />
+                    <Label style="-fx-font-size: 13px; -fx-text-fill: #62656F;"
+                           text="Staff profiles, role assignments, credentials, payroll base &amp; daily attendance logging" />
+                </VBox>
+                <HBox alignment="CENTER_RIGHT" spacing="12.0" HBox.hgrow="ALWAYS">
+                    <Button onAction="#handleRefresh"
+                            style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 16; -fx-font-weight: 600; -fx-text-fill: #15171F; -fx-cursor: hand;"
+                            text="🔄  Refresh Data" />
+                </HBox>
+            </HBox>
+
+            <!-- Center Content ScrollPane -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                <VBox spacing="16.0">
+
+                    <!-- ROW 1: 4 KPI CARDS -->
+                    <HBox spacing="16.0">
+                        <!-- KPI 1: Active Staff -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="ACTIVE STAFF" />
+                                <Label style="-fx-background-color: #D8F1F7; -fx-text-fill: #07768F; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="USERS" />
+                            </HBox>
+                            <Label fx:id="totalStaffCountLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Total active workforce" />
+                        </VBox>
+
+                        <!-- KPI 2: Present Today -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="PRESENT TODAY" />
+                                <Label style="-fx-background-color: #DAF2E3; -fx-text-fill: #1A7A46; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="TODAY" />
+                            </HBox>
+                            <Label fx:id="presentTodayCountLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #1A7A46;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Checked-in &amp; on duty" />
+                        </VBox>
+
+                        <!-- KPI 3: Absent / Leave -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="ABSENT / LEAVE" />
+                                <Label style="-fx-background-color: #FBDDEA; -fx-text-fill: #B8134F; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="STATUS" />
+                            </HBox>
+                            <Label fx:id="absentTodayCountLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #B8134F;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Absent, half-day or leave" />
+                        </VBox>
+
+                        <!-- KPI 4: Monthly Payroll Base -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="MONTHLY BASE SALARY" />
+                                <Label style="-fx-background-color: #FFF0BF; -fx-text-fill: #6B4D00; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="PAYROLL" />
+                            </HBox>
+                            <Label fx:id="payrollBaseLabel"
+                                   style="-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #07768F;"
+                                   text="Rs. 0.00" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Combined basic monthly payroll" />
+                        </VBox>
+                    </HBox>
+
+                    <!-- ROW 2: TABPANE -->
+                    <TabPane style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 14; -fx-background-radius: 14;" tabClosingPolicy="UNAVAILABLE">
+                        <tabs>
+
+                            <!-- TAB 1: STAFF DIRECTORY & PROFILES -->
+                            <Tab text="👥  Staff Directory &amp; Roles">
+                                <HBox spacing="18.0" style="-fx-padding: 18;">
+
+                                    <!-- LEFT: EMPLOYEES TABLE -->
+                                    <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+                                        <!-- Table Filters -->
+                                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                            <TextField fx:id="searchField" prefHeight="38.0" prefWidth="260.0"
+                                                       promptText="🔍  Search by name, role, email, phone..."
+                                                       style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 12; -fx-font-size: 13px;" />
+
+                                            <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F;"
+                                                   text="Role Filter:" />
+                                            <ComboBox fx:id="roleFilterComboBox" prefHeight="38.0" prefWidth="180.0"
+                                                      style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" />
+                                        </HBox>
+
+                                        <!-- TableView -->
+                                        <TableView fx:id="employeeTable" prefHeight="480.0" style="-fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="colId" prefWidth="50.0" text="ID" />
+                                                <TableColumn fx:id="colName" prefWidth="150.0" text="Full Name" />
+                                                <TableColumn fx:id="colRole" prefWidth="130.0" text="Role" />
+                                                <TableColumn fx:id="colEmail" prefWidth="150.0" text="Email" />
+                                                <TableColumn fx:id="colPhone" prefWidth="100.0" text="Phone" />
+                                                <TableColumn fx:id="colNic" prefWidth="100.0" text="NIC" />
+                                                <TableColumn fx:id="colBasicSalary" prefWidth="110.0" text="Basic Salary" />
+                                                <TableColumn fx:id="colStatus" prefWidth="80.0" text="Status" />
+                                            </columns>
+                                        </TableView>
+                                    </VBox>
+
+                                    <!-- RIGHT: STAFF PROFILE FORM -->
+                                    <VBox prefWidth="380.0" spacing="14.0" style="-fx-background-color: #FAF8F3; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;">
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                               text="Staff Profile &amp; Access" />
+
+                                        <VBox spacing="4.0">
+                                            <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="FULL NAME *" />
+                                            <TextField fx:id="nameField" prefHeight="34.0" promptText="e.g. Kasun Perera"
+                                                       style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <VBox spacing="4.0">
+                                            <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="SYSTEM ROLE *" />
+                                            <ComboBox fx:id="roleComboBox" maxWidth="Infinity" prefHeight="34.0"
+                                                      style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <HBox spacing="10.0">
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="EMAIL (LOGIN) *" />
+                                                <TextField fx:id="emailField" prefHeight="34.0" promptText="staff@dcroyal.lk"
+                                                           style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="PASSWORD" />
+                                                <PasswordField fx:id="passwordField" prefHeight="34.0" promptText="Leave blank for '123'"
+                                                               style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+                                        </HBox>
+
+                                        <HBox spacing="10.0">
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="PHONE NUMBER" />
+                                                <TextField fx:id="phoneField" prefHeight="34.0" promptText="0771234567"
+                                                           style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="NIC NUMBER" />
+                                                <TextField fx:id="nicField" prefHeight="34.0" promptText="199200000000"
+                                                           style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+                                        </HBox>
+
+                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="BASIC MONTHLY SALARY (LKR)" />
+                                                <TextField fx:id="basicSalaryField" prefHeight="34.0" promptText="50000.00"
+                                                           style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+                                            <CheckBox fx:id="activeCheckBox" selected="true" style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-padding: 16 0 0 0;" text="Active Staff" />
+                                        </HBox>
+
+                                        <!-- Action Buttons Grid -->
+                                        <VBox spacing="8.0" style="-fx-padding: 6 0 0 0;">
+                                            <HBox spacing="8.0">
+                                                <Button fx:id="addEmployeeButton" maxWidth="Infinity" onAction="#handleAddEmployee" prefHeight="38.0"
+                                                        style="-fx-background-color: #07768F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                        text="➕  Add Employee" HBox.hgrow="ALWAYS" />
+
+                                                <Button fx:id="updateEmployeeButton" disable="true" maxWidth="Infinity" onAction="#handleUpdateEmployee" prefHeight="38.0"
+                                                        style="-fx-background-color: #14161F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                        text="💾  Update Profile" HBox.hgrow="ALWAYS" />
+                                            </HBox>
+
+                                            <HBox spacing="8.0">
+                                                <Button fx:id="toggleStatusButton" disable="true" maxWidth="Infinity" onAction="#handleToggleStatus" prefHeight="34.0"
+                                                        style="-fx-background-color: white; -fx-border-color: #B8134F; -fx-text-fill: #B8134F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand;"
+                                                        text="⛔  Deactivate" HBox.hgrow="ALWAYS" />
+
+                                                <Button fx:id="resetPasswordButton" disable="true" maxWidth="Infinity" onAction="#handleResetPassword" prefHeight="34.0"
+                                                        style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-text-fill: #15171F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand;"
+                                                        text="🔑  Reset Pass" HBox.hgrow="ALWAYS" />
+                                            </HBox>
+
+                                            <HBox spacing="8.0">
+                                                <Button fx:id="printStaffCardButton" disable="true" maxWidth="Infinity" onAction="#handlePrintStaffCard" prefHeight="34.0"
+                                                        style="-fx-background-color: #DAF2E3; -fx-text-fill: #1A7A46; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                        text="🪪  Staff ID Badge" HBox.hgrow="ALWAYS" />
+
+                                                <Button fx:id="clearFormButton" maxWidth="Infinity" onAction="#handleClearForm" prefHeight="34.0"
+                                                        style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-text-fill: #62656F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand;"
+                                                        text="🧹  Clear Form" HBox.hgrow="ALWAYS" />
+                                            </HBox>
+                                        </VBox>
+                                    </VBox>
+
+                                </HBox>
+                            </Tab>
+
+                            <!-- TAB 2: ATTENDANCE MANAGEMENT -->
+                            <Tab text="📅  Daily Attendance Tracking">
+                                <HBox spacing="18.0" style="-fx-padding: 18;">
+
+                                    <!-- LEFT: ATTENDANCE TABLE -->
+                                    <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+                                        <!-- Date Filter & Search -->
+                                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                            <Label style="-fx-font-size: 12px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                                   text="Attendance Date:" />
+                                            <DatePicker fx:id="attendanceDatePicker" prefHeight="38.0" prefWidth="160.0"
+                                                        style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" />
+
+                                            <TextField fx:id="attSearchField" prefHeight="38.0" prefWidth="220.0"
+                                                       promptText="🔍  Search attendance..."
+                                                       style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 12; -fx-font-size: 13px;" />
+
+                                            <ComboBox fx:id="attStatusFilterComboBox" prefHeight="38.0" prefWidth="140.0"
+                                                      style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" />
+
+                                            <HBox alignment="CENTER_RIGHT" spacing="8.0" HBox.hgrow="ALWAYS">
+                                                <Button fx:id="printAttendanceReportButton" onAction="#handlePrintAttendanceReport" prefHeight="38.0"
+                                                        style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-weight: 600; -fx-text-fill: #15171F; -fx-cursor: hand;"
+                                                        text="🖨️  Print Daily Sheet" />
+                                            </HBox>
+                                        </HBox>
+
+                                        <!-- Attendance Table -->
+                                        <TableView fx:id="attendanceTable" prefHeight="480.0" style="-fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="colAttName" prefWidth="180.0" text="Employee Name" />
+                                                <TableColumn fx:id="colAttRole" prefWidth="140.0" text="Role" />
+                                                <TableColumn fx:id="colAttStatus" prefWidth="110.0" text="Status" />
+                                                <TableColumn fx:id="colAttCheckIn" prefWidth="110.0" text="Check-In" />
+                                                <TableColumn fx:id="colAttCheckOut" prefWidth="110.0" text="Check-Out" />
+                                                <TableColumn fx:id="colAttRecordedBy" prefWidth="140.0" text="Recorded By" />
+                                            </columns>
+                                        </TableView>
+                                    </VBox>
+
+                                    <!-- RIGHT: ATTENDANCE LOGGER PANEL -->
+                                    <VBox prefWidth="360.0" spacing="14.0" style="-fx-background-color: #FAF8F3; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;">
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                               text="Log Staff Attendance" />
+
+                                        <VBox spacing="4.0">
+                                            <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="SELECT EMPLOYEE *" />
+                                            <ComboBox fx:id="attStaffComboBox" maxWidth="Infinity" prefHeight="34.0"
+                                                      style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <VBox spacing="4.0">
+                                            <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="STATUS *" />
+                                            <ComboBox fx:id="attStatusComboBox" maxWidth="Infinity" prefHeight="34.0"
+                                                      style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <VBox spacing="4.0">
+                                            <HBox alignment="CENTER_LEFT">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="CHECK-IN TIME" />
+                                                <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                                                    <Button onAction="#handleSetCheckInNow" style="-fx-background-color: transparent; -fx-text-fill: #07768F; -fx-font-size: 11px; -fx-font-weight: 700; -fx-cursor: hand;" text="Set Now" />
+                                                </HBox>
+                                            </HBox>
+                                            <TextField fx:id="attCheckInField" prefHeight="34.0" promptText="08:30:00"
+                                                       style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <VBox spacing="4.0">
+                                            <HBox alignment="CENTER_LEFT">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="CHECK-OUT TIME" />
+                                                <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                                                    <Button onAction="#handleSetCheckOutNow" style="-fx-background-color: transparent; -fx-text-fill: #07768F; -fx-font-size: 11px; -fx-font-weight: 700; -fx-cursor: hand;" text="Set Now" />
+                                                </HBox>
+                                            </HBox>
+                                            <TextField fx:id="attCheckOutField" prefHeight="34.0" promptText="17:00:00"
+                                                       style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <VBox spacing="10.0" style="-fx-padding: 8 0 0 0;">
+                                            <Button fx:id="recordAttendanceButton" maxWidth="Infinity" onAction="#handleRecordAttendance" prefHeight="40.0"
+                                                    style="-fx-background-color: #07768F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                    text="✔  Record / Update Attendance" />
+
+                                            <Separator />
+
+                                            <Label style="-fx-font-size: 12px; -fx-font-weight: 700; -fx-text-fill: #15171F;" text="⚡  Batch Quick Action:" />
+                                            <Button fx:id="markAllPresentButton" maxWidth="Infinity" onAction="#handleMarkAllPresent" prefHeight="36.0"
+                                                    style="-fx-background-color: #DAF2E3; -fx-text-fill: #1A7A46; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                    text="⚡  Mark All Active Staff Present" />
+                                            <Label style="-fx-font-size: 11px; -fx-text-fill: #62656F;"
+                                                   text="Auto-marks 08:30:00 check-in for remaining unrecorded staff on selected date." wrapText="true" />
+                                        </VBox>
+                                    </VBox>
+
+                                </HBox>
+                            </Tab>
+
+                        </tabs>
+                    </TabPane>
+
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>

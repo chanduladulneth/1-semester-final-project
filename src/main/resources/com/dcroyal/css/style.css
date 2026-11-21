@@ -1,0 +1,164 @@
+/* ============================================================ */
+/* DC Royal Printing — JavaFX Stylesheet                       */
+/* Matches the HTML theme colors from client design            */
+/* ============================================================ */
+
+/* ---- Root / Global ---- */
+.root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #F6F3EC;
+}
+
+/* ---- Scroll Pane — remove white border/background ---- */
+.scroll-pane {
+    -fx-background-color: #F6F3EC;
+    -fx-border-color: transparent;
+}
+.scroll-pane .viewport {
+    -fx-background-color: #F6F3EC;
+}
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: #F6F3EC;
+    -fx-pref-width: 8px;
+}
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #CFC8B8;
+    -fx-background-radius: 999;
+}
+
+/* ---- Sidebar Nav Button ---- */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #C9CBD4;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-padding: 11 14;
+    -fx-background-radius: 12;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+    -fx-pref-height: 44px;
+}
+.nav-button:hover {
+    -fx-background-color: #1F2230;
+    -fx-text-fill: white;
+}
+.nav-button:focused {
+    -fx-background-color: #262A3C;
+    -fx-text-fill: white;
+    -fx-border-color: #00AEEF;
+    -fx-border-width: 0 0 0 3;
+    -fx-border-radius: 0;
+}
+
+/* ---- Login Button (Magenta) ---- */
+.btn-login {
+    -fx-background-color: #B8134F;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-size: 15px;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-pref-height: 46px;
+}
+.btn-login:hover {
+    -fx-background-color: #9A0F42;
+}
+
+/* ---- Input Fields ---- */
+.text-field, .password-field {
+    -fx-background-color: white;
+    -fx-border-color: #CFC8B8;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-width: 1;
+    -fx-padding: 0 12;
+    -fx-font-size: 14px;
+    -fx-pref-height: 46px;
+}
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #07768F;
+    -fx-border-width: 2;
+}
+
+/* ---- Chart General Styling ---- */
+.chart {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-padding: 10;
+    -fx-border-color: #E6E0D3;
+    -fx-border-radius: 14;
+    -fx-border-width: 1;
+}
+
+/* Bar chart bar color — Cyan */
+.bar-chart .data0.chart-bar,
+.bar-chart .data1.chart-bar,
+.bar-chart .data2.chart-bar,
+.bar-chart .data3.chart-bar,
+.bar-chart .data4.chart-bar,
+.bar-chart .data5.chart-bar,
+.bar-chart .data6.chart-bar,
+.bar-chart .data7.chart-bar,
+.bar-chart .data8.chart-bar {
+    -fx-bar-fill: #07768F;
+}
+
+/* Line chart — Magenta line */
+.line-chart .chart-series-line {
+    -fx-stroke: #B8134F;
+    -fx-stroke-width: 2.5px;
+}
+.line-chart .chart-line-symbol {
+    -fx-background-color: #B8134F, white;
+    -fx-background-radius: 999;
+}
+
+/* Chart plot background — transparent */
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+/* Chart axis labels */
+.axis-label {
+    -fx-text-fill: #62656F;
+    -fx-font-size: 12px;
+}
+.axis .axis-tick-mark {
+    -fx-stroke: #E6E0D3;
+}
+
+/* Chart title */
+.chart-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #15171F;
+}
+
+/* Chart grid lines */
+.chart-horizontal-grid-lines {
+    -fx-stroke: #E6E0D3;
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: transparent;
+}
+
+
+/* ---- Sidebar ScrollPane Styling ---- */
+.sidebar-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+}
+.sidebar-scroll .viewport {
+    -fx-background-color: transparent;
+}
+.sidebar-scroll .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 6px;
+}
+.sidebar-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: #262A3C;
+    -fx-background-radius: 999;
+}

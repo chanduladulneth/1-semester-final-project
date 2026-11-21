@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="800.0" prefWidth="1280.0"
+            style="-fx-background-color: #F6F3EC; -fx-font-family: 'Segoe UI', sans-serif;"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dcroyal.controller.SalaryController">
+
+    <!-- Left Navigation Sidebar -->
+    <left>
+        <fx:include source="Sidebar.fxml" />
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <VBox spacing="16.0" style="-fx-background-color: #F6F3EC;">
+            <padding>
+                <Insets bottom="20.0" left="24.0" right="24.0" top="20.0" />
+            </padding>
+
+            <!-- Top Header -->
+            <HBox alignment="CENTER_LEFT" spacing="16.0">
+                <VBox spacing="2.0">
+                    <Label style="-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                           text="Employee Salary &amp; Payroll Management" />
+                    <Label style="-fx-font-size: 13px; -fx-text-fill: #62656F;"
+                           text="Monthly payroll processing, overtime/deductions, Owner approval &amp; payslip disbursement" />
+                </VBox>
+                <HBox alignment="CENTER_RIGHT" spacing="12.0" HBox.hgrow="ALWAYS">
+                    <Button onAction="#handleRefresh"
+                            style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 16; -fx-font-weight: 600; -fx-text-fill: #15171F; -fx-cursor: hand;"
+                            text="🔄  Refresh Data" />
+                </HBox>
+            </HBox>
+
+            <!-- Center Content ScrollPane -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                <VBox spacing="16.0">
+
+                    <!-- ROW 1: 4 KPI CARDS -->
+                    <HBox spacing="16.0">
+                        <!-- KPI 1: Net Payroll for Month -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="TOTAL NET PAYROLL" />
+                                <Label style="-fx-background-color: #D8F1F7; -fx-text-fill: #07768F; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="MONTH" />
+                            </HBox>
+                            <Label fx:id="totalPayrollNetLabel"
+                                   style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #07768F;"
+                                   text="Rs. 0.00" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Total net payout for selected month" />
+                        </VBox>
+
+                        <!-- KPI 2: Pending Owner Approval -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="PENDING APPROVAL" />
+                                <Label style="-fx-background-color: #FFF0BF; -fx-text-fill: #6B4D00; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="OWNER" />
+                            </HBox>
+                            <Label fx:id="pendingApprovalCountLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #B8134F;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Awaiting Owner sign-off" />
+                        </VBox>
+
+                        <!-- KPI 3: Approved -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="APPROVED BATCH" />
+                                <Label style="-fx-background-color: #D8F1F7; -fx-text-fill: #07768F; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="READY" />
+                            </HBox>
+                            <Label fx:id="approvedCountLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Authorized for bank disbursement" />
+                        </VBox>
+
+                        <!-- KPI 4: Paid -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="PAID / SETTLED" />
+                                <Label style="-fx-background-color: #DAF2E3; -fx-text-fill: #1A7A46; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="PAID" />
+                            </HBox>
+                            <Label fx:id="paidCountLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #1A7A46;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Completed disbursements" />
+                        </VBox>
+                    </HBox>
+
+                    <!-- ROW 2: TABPANE -->
+                    <TabPane style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 14; -fx-background-radius: 14;" tabClosingPolicy="UNAVAILABLE">
+                        <tabs>
+
+                            <!-- TAB 1: MONTHLY PAYROLL & PAYOUT OPERATIONS -->
+                            <Tab text="💰  Monthly Payroll &amp; Approvals">
+                                <HBox spacing="18.0" style="-fx-padding: 18;">
+
+                                    <!-- LEFT: PAYROLL TABLE -->
+                                    <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+                                        <!-- Filters Bar -->
+                                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                            <Label style="-fx-font-size: 12px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                                   text="Payroll Month:" />
+                                            <ComboBox fx:id="monthFilterComboBox" prefHeight="38.0" prefWidth="140.0"
+                                                      style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" />
+
+                                            <TextField fx:id="searchField" prefHeight="38.0" prefWidth="220.0"
+                                                       promptText="🔍  Search staff, role, status..."
+                                                       style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 12; -fx-font-size: 13px;" />
+
+                                            <ComboBox fx:id="statusFilterComboBox" prefHeight="38.0" prefWidth="160.0"
+                                                      style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" />
+                                        </HBox>
+
+                                        <!-- TableView -->
+                                        <TableView fx:id="salaryTable" prefHeight="480.0" style="-fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="colEmployee" prefWidth="160.0" text="Employee Name" />
+                                                <TableColumn fx:id="colRole" prefWidth="120.0" text="Role" />
+                                                <TableColumn fx:id="colMonth" prefWidth="85.0" text="Month" />
+                                                <TableColumn fx:id="colBasic" prefWidth="110.0" text="Basic (LKR)" />
+                                                <TableColumn fx:id="colOt" prefWidth="100.0" text="OT / Allow" />
+                                                <TableColumn fx:id="colDeductions" prefWidth="95.0" text="Deductions" />
+                                                <TableColumn fx:id="colNet" prefWidth="115.0" text="Net Payable" />
+                                                <TableColumn fx:id="colStatus" prefWidth="125.0" text="Status" />
+                                                <TableColumn fx:id="colSubmittedBy" prefWidth="110.0" text="Submitted By" />
+                                                <TableColumn fx:id="colApprovedBy" prefWidth="110.0" text="Approved By" />
+                                            </columns>
+                                        </TableView>
+                                    </VBox>
+
+                                    <!-- RIGHT: ACTION & APPROVAL PANEL -->
+                                    <VBox prefWidth="360.0" spacing="14.0" style="-fx-background-color: #FAF8F3; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;">
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                               text="Payroll Actions" />
+
+                                        <!-- Selected Record Details -->
+                                        <VBox spacing="8.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 12;">
+                                            <Label fx:id="selectedEmpLabel" style="-fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: #15171F;" text="No record selected" />
+                                            <Label fx:id="selectedMonthLabel" style="-fx-font-size: 12px; -fx-text-fill: #62656F;" text="-" />
+
+                                            <Separator />
+
+                                            <Label fx:id="selectedBasicLabel" style="-fx-font-size: 12px; -fx-text-fill: #15171F;" text="Basic: -" />
+                                            <Label fx:id="selectedOtLabel" style="-fx-font-size: 12px; -fx-text-fill: #1A7A46;" text="OT / Allowances: -" />
+                                            <Label fx:id="selectedDeductionsLabel" style="-fx-font-size: 12px; -fx-text-fill: #B8134F;" text="Deductions: -" />
+
+                                            <Separator />
+
+                                            <Label fx:id="selectedNetLabel" style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #07768F;" text="Net Payable: -" />
+                                        </VBox>
+
+                                        <!-- Action Buttons -->
+                                        <VBox spacing="10.0" style="-fx-padding: 8 0 0 0;">
+                                            <Button fx:id="approveSalaryButton" disable="true" maxWidth="Infinity" onAction="#handleApproveSalary" prefHeight="40.0"
+                                                    style="-fx-background-color: #07768F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                    text="✔  Approve Payroll (Owner)" />
+
+                                            <Button fx:id="markPaidButton" disable="true" maxWidth="Infinity" onAction="#handleMarkPaid" prefHeight="40.0"
+                                                    style="-fx-background-color: #1A7A46; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                    text="💵  Mark Paid / Disbursed" />
+
+                                            <Button fx:id="printPaySlipButton" disable="true" maxWidth="Infinity" onAction="#handlePrintPaySlip" prefHeight="38.0"
+                                                    style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-text-fill: #15171F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand;"
+                                                    text="📄  Print Salary Pay Slip" />
+                                        </VBox>
+                                    </VBox>
+
+                                </HBox>
+                            </Tab>
+
+                            <!-- TAB 2: PROCESS & SUBMIT PAYROLL -->
+                            <Tab text="⚙️  Process &amp; Submit Payroll">
+                                <HBox spacing="18.0" style="-fx-padding: 18;">
+
+                                    <!-- LEFT: BATCH AUTO-GENERATION -->
+                                    <VBox prefWidth="420.0" spacing="16.0" style="-fx-background-color: #FAF8F3; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 18;">
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                               text="⚡  Batch Monthly Generation" />
+
+                                        <Label style="-fx-font-size: 13px; -fx-text-fill: #62656F; -fx-line-spacing: 2px;"
+                                               text="Instantly generate monthly payroll drafts for ALL active staff members based on their registered base salary in one single click."
+                                               wrapText="true" />
+
+                                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-padding: 12; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;">
+                                            <Label style="-fx-font-size: 11px; -fx-font-weight: 700; -fx-text-fill: #07768F;" text="WORKFLOW NOTE:" />
+                                            <Label style="-fx-font-size: 11px; -fx-text-fill: #62656F;"
+                                                   text="• If logged in as Manager: Drafts are set to PENDING_OWNER.&#10;• If logged in as Owner: Records are auto-marked APPROVED.&#10;• Existing processed records for the month remain untouched."
+                                                   wrapText="true" />
+                                        </VBox>
+
+                                        <Button fx:id="autoGeneratePayrollButton" maxWidth="Infinity" onAction="#handleAutoGeneratePayroll" prefHeight="44.0"
+                                                style="-fx-background-color: #14161F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                text="⚡  Auto-Generate Monthly Payroll Batch" />
+                                    </VBox>
+
+                                    <!-- RIGHT: SINGLE EMPLOYEE PAYROLL ADJUSTMENT FORM -->
+                                    <VBox prefWidth="480.0" spacing="14.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 18;" HBox.hgrow="ALWAYS">
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                               text="Custom Staff Payroll Adjustment" />
+
+                                        <HBox spacing="12.0">
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="SALARY MONTH *" />
+                                                <ComboBox fx:id="processMonthComboBox" maxWidth="Infinity" prefHeight="36.0"
+                                                          style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="SELECT EMPLOYEE *" />
+                                                <ComboBox fx:id="processStaffComboBox" maxWidth="Infinity" prefHeight="36.0"
+                                                          style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+                                        </HBox>
+
+                                        <VBox spacing="4.0">
+                                            <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="BASIC SALARY (LKR) *" />
+                                            <TextField fx:id="processBasicSalaryField" prefHeight="36.0" promptText="0.00"
+                                                       style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <HBox spacing="12.0">
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #1A7A46;" text="OVERTIME &amp; ALLOWANCES (+)" />
+                                                <TextField fx:id="processOtField" prefHeight="36.0" promptText="0.00"
+                                                           style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #B8134F;" text="DEDUCTIONS (EPF/ETF/ADV) (-)" />
+                                                <TextField fx:id="processDeductionsField" prefHeight="36.0" promptText="0.00"
+                                                           style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+                                        </HBox>
+
+                                        <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: #F6F3EC; -fx-padding: 14; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;">
+                                            <Label style="-fx-font-weight: 700; -fx-font-size: 13px; -fx-text-fill: #15171F;" text="NET CALCULATED PAYABLE:" />
+                                            <Label fx:id="calculatedNetPayLabel" style="-fx-font-weight: 700; -fx-font-size: 20px; -fx-text-fill: #07768F;" text="Rs. 0.00" />
+                                        </HBox>
+
+                                        <Button fx:id="submitSalaryButton" maxWidth="Infinity" onAction="#handleSubmitSalary" prefHeight="44.0"
+                                                style="-fx-background-color: #07768F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                text="💾  Save &amp; Submit Salary Record" />
+                                    </VBox>
+
+                                </HBox>
+                            </Tab>
+
+                        </tabs>
+                    </TabPane>
+
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<!--
+    InventoryView.fxml
+    Inventory Management & Physical QR Card Stock Issue Screen
+    Controller: com.dcroyal.controller.InventoryController
+-->
+<BorderPane
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.dcroyal.controller.InventoryController"
+    style="-fx-background-color: #F6F3EC;">
+
+    <!-- Left Sidebar -->
+    <left>
+        <fx:include source="Sidebar.fxml" fx:id="sidebar"/>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <BorderPane style="-fx-background-color: #F6F3EC;">
+
+            <!-- Top Header -->
+            <top>
+                <HBox alignment="CENTER_LEFT" spacing="16"
+                      style="-fx-padding: 22 32 10 32; -fx-background-color: #F6F3EC;">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="INVENTORY &amp; STOCKS"
+                               style="-fx-font-size: 11px; -fx-font-weight: 700; -fx-text-fill: #62656F; -fx-letter-spacing: 1px;"/>
+                        <Label text="Inventory &amp; QR Card Stock Tracking"
+                               style="-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                    </VBox>
+                </HBox>
+            </top>
+
+            <!-- Center Content -->
+            <center>
+                <VBox spacing="14" style="-fx-padding: 0 32 24 32; -fx-background-color: #F6F3EC;">
+
+                    <!-- ROW 1: 4 KPI CARDS -->
+                    <HBox spacing="16">
+
+                        <!-- KPI 1: Total Items -->
+                        <VBox spacing="4" HBox.hgrow="ALWAYS"
+                              style="
+                                  -fx-background-color: white;
+                                  -fx-background-radius: 14;
+                                  -fx-border-color: #E6E0D3;
+                                  -fx-border-radius: 14;
+                                  -fx-border-width: 1;
+                                  -fx-padding: 14 16;
+                                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+                            <Label text="Total Inventory Items" style="-fx-font-size: 11px; -fx-text-fill: #62656F; -fx-font-weight: 600;"/>
+                            <Label fx:id="totalItemsCountLabel" text="0" style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #07768F;"/>
+                            <Label text="Raw materials in catalog" style="-fx-font-size: 11px; -fx-text-fill: #62656F;"/>
+                        </VBox>
+
+                        <!-- KPI 2: Low Stock Alert -->
+                        <VBox spacing="4" HBox.hgrow="ALWAYS"
+                              style="
+                                  -fx-background-color: white;
+                                  -fx-background-radius: 14;
+                                  -fx-border-color: #E6E0D3;
+                                  -fx-border-radius: 14;
+                                  -fx-border-width: 1;
+                                  -fx-padding: 14 16;
+                                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+                            <Label text="Low Stock Alerts" style="-fx-font-size: 11px; -fx-text-fill: #62656F; -fx-font-weight: 600;"/>
+                            <Label fx:id="lowStockCountLabel" text="0" style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #B8134F;"/>
+                            <Label text="Need immediate reorder" style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #B8134F;"/>
+                        </VBox>
+
+                        <!-- KPI 3: Stock OK -->
+                        <VBox spacing="4" HBox.hgrow="ALWAYS"
+                              style="
+                                  -fx-background-color: white;
+                                  -fx-background-radius: 14;
+                                  -fx-border-color: #E6E0D3;
+                                  -fx-border-radius: 14;
+                                  -fx-border-width: 1;
+                                  -fx-padding: 14 16;
+                                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+                            <Label text="Stock Normal / OK" style="-fx-font-size: 11px; -fx-text-fill: #62656F; -fx-font-weight: 600;"/>
+                            <Label fx:id="stockOkCountLabel" text="0" style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #1A7A46;"/>
+                            <Label text="Sufficient quantities" style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #1A7A46;"/>
+                        </VBox>
+
+                        <!-- KPI 4: Total Valuation -->
+                        <VBox spacing="4" HBox.hgrow="ALWAYS"
+                              style="
+                                  -fx-background-color: white;
+                                  -fx-background-radius: 14;
+                                  -fx-border-color: #E6E0D3;
+                                  -fx-border-radius: 14;
+                                  -fx-border-width: 1;
+                                  -fx-padding: 14 16;
+                                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+                            <Label text="Total Stock Valuation" style="-fx-font-size: 11px; -fx-text-fill: #62656F; -fx-font-weight: 600;"/>
+                            <Label fx:id="totalStockValueLabel" text="LKR 0" style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                            <Label text="Cost value of warehouse" style="-fx-font-size: 11px; -fx-text-fill: #07768F;"/>
+                        </VBox>
+
+                    </HBox>
+
+                    <!-- ROW 2: TABPANE -->
+                    <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS"
+                             style="-fx-background-color: transparent;">
+
+                        <!-- ============================================== -->
+                        <!-- TAB 1: STOCK ITEMS MANAGEMENT                  -->
+                        <!-- ============================================== -->
+                        <Tab text="📦  Stock Items &amp; Catalog">
+                            <HBox spacing="16" style="-fx-padding: 14 0 0 0;">
+
+                                <!-- LEFT FORM CARD -->
+                                <VBox spacing="12" prefWidth="380" minWidth="340"
+                                      style="
+                                          -fx-background-color: white;
+                                          -fx-background-radius: 14;
+                                          -fx-border-color: #E6E0D3;
+                                          -fx-border-radius: 14;
+                                          -fx-border-width: 1;
+                                          -fx-padding: 18;
+                                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+
+                                    <Label text="Stock Item Details"
+                                           style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+
+                                    <!-- SKU Code -->
+                                    <VBox spacing="3">
+                                        <Label text="SKU Code *" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                        <TextField fx:id="skuCodeField" promptText="e.g. INV-3D-002" prefHeight="32"
+                                                   style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                    </VBox>
+
+                                    <!-- Item Name -->
+                                    <VBox spacing="3">
+                                        <Label text="Item Name *" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                        <TextField fx:id="itemNameField" promptText="e.g. DTF Film Roll 60cm" prefHeight="32"
+                                                   style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                    </VBox>
+
+                                    <!-- Category & Unit -->
+                                    <HBox spacing="10">
+                                        <VBox spacing="3" HBox.hgrow="ALWAYS">
+                                            <Label text="Category" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                            <ComboBox fx:id="categoryComboBox" maxWidth="Infinity" prefHeight="32"
+                                                      style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                        </VBox>
+                                        <VBox spacing="3" prefWidth="110">
+                                            <Label text="Unit" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                            <ComboBox fx:id="unitComboBox" maxWidth="Infinity" prefHeight="32"
+                                                      style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                        </VBox>
+                                    </HBox>
+
+                                    <!-- Stock, Reorder & Cost -->
+                                    <HBox spacing="10">
+                                        <VBox spacing="3" HBox.hgrow="ALWAYS">
+                                            <Label text="Current Stock" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                            <TextField fx:id="currentStockField" promptText="0.00" prefHeight="32"
+                                                       style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                        </VBox>
+                                        <VBox spacing="3" HBox.hgrow="ALWAYS">
+                                            <Label text="Reorder Level" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                            <TextField fx:id="reorderLevelField" text="10.00" prefHeight="32"
+                                                       style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                        </VBox>
+                                    </HBox>
+
+                                    <!-- Unit Cost -->
+                                    <VBox spacing="3">
+                                        <Label text="Unit Cost (LKR)" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                        <TextField fx:id="unitCostField" promptText="0.00" prefHeight="32"
+                                                   style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                    </VBox>
+
+                                    <Separator style="-fx-padding: 4 0;"/>
+
+                                    <!-- Action Buttons -->
+                                    <HBox spacing="8">
+                                        <Button fx:id="saveButton" text="💾  Save Item"
+                                                HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="36"
+                                                onAction="#handleSaveItem"
+                                                style="-fx-background-color: #07768F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"/>
+
+                                        <Button fx:id="updateButton" text="✏️  Update" disable="true"
+                                                prefWidth="90" prefHeight="36"
+                                                onAction="#handleUpdateItem"
+                                                style="-fx-background-color: #FFE600; -fx-text-fill: #15171F; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"/>
+                                    </HBox>
+
+                                    <HBox spacing="8">
+                                        <Button fx:id="deleteButton" text="🗑️  Delete" disable="true"
+                                                HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="32"
+                                                onAction="#handleDeleteItem"
+                                                style="-fx-background-color: #FFF0F4; -fx-text-fill: #B8134F; -fx-font-weight: 600; -fx-border-color: #F8B4C8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand;"/>
+
+                                        <Button fx:id="clearButton" text="🔄  Clear"
+                                                prefWidth="90" prefHeight="32"
+                                                onAction="#handleClear"
+                                                style="-fx-background-color: #EBE7DF; -fx-text-fill: #62656F; -fx-font-weight: 600; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                                    </HBox>
+
+                                </VBox>
+
+                                <!-- RIGHT TABLE CARD -->
+                                <VBox spacing="12" HBox.hgrow="ALWAYS"
+                                      style="
+                                          -fx-background-color: white;
+                                          -fx-background-radius: 14;
+                                          -fx-border-color: #E6E0D3;
+                                          -fx-border-radius: 14;
+                                          -fx-border-width: 1;
+                                          -fx-padding: 18;
+                                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+
+                                    <!-- Table Filter & Search Controls -->
+                                    <HBox spacing="12" alignment="CENTER_LEFT">
+                                        <Label text="Filter:" style="-fx-font-size: 12px; -fx-font-weight: 600;"/>
+                                        <ComboBox fx:id="filterCategoryComboBox" prefWidth="160" prefHeight="34"
+                                                  style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+
+                                        <Region HBox.hgrow="ALWAYS"/>
+
+                                        <TextField fx:id="searchField" promptText="🔍  Search by SKU, item name or category..."
+                                                   prefWidth="320" prefHeight="34"
+                                                   style="-fx-border-color: #E6E0D3; -fx-border-radius: 6; -fx-padding: 0 10;"/>
+                                    </HBox>
+
+                                    <Separator style="-fx-padding: 2 0;"/>
+
+                                    <!-- TableView -->
+                                    <TableView fx:id="inventoryTable" VBox.vgrow="ALWAYS" prefHeight="380"
+                                               style="-fx-background-color: transparent; -fx-border-color: #E6E0D3; -fx-border-radius: 8;">
+                                        <columns>
+                                            <TableColumn fx:id="colSku" text="SKU" prefWidth="100"/>
+                                            <TableColumn fx:id="colName" text="Item Name" prefWidth="190"/>
+                                            <TableColumn fx:id="colCategory" text="Category" prefWidth="120"/>
+                                            <TableColumn fx:id="colStock" text="Stock" prefWidth="75"/>
+                                            <TableColumn fx:id="colUnit" text="Unit" prefWidth="65"/>
+                                            <TableColumn fx:id="colReorder" text="Reorder" prefWidth="75"/>
+                                            <TableColumn fx:id="colUnitCost" text="Cost (LKR)" prefWidth="95"/>
+                                            <TableColumn fx:id="colStatus" text="Stock Status" prefWidth="105"/>
+                                        </columns>
+                                        <columnResizePolicy>
+                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                        </columnResizePolicy>
+                                    </TableView>
+
+                                </VBox>
+
+                            </HBox>
+                        </Tab>
+
+                        <!-- ============================================== -->
+                        <!-- TAB 2: QR CARD STOCK ISSUE & ACCESS LOGS       -->
+                        <!-- ============================================== -->
+                        <Tab text="📱  QR Card Stock Issue &amp; Logs">
+                            <HBox spacing="16" style="-fx-padding: 14 0 0 0;">
+
+                                <!-- LEFT: QR CARD SCAN & ISSUE FORM -->
+                                <VBox spacing="14" prefWidth="380" minWidth="340"
+                                      style="
+                                          -fx-background-color: white;
+                                          -fx-background-radius: 14;
+                                          -fx-border-color: #E6E0D3;
+                                          -fx-border-radius: 14;
+                                          -fx-border-width: 1;
+                                          -fx-padding: 18;
+                                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+
+                                    <Label text="QR Card Access &amp; Stock Issue"
+                                           style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+
+                                    <!-- QR Card Input & Validate -->
+                                    <VBox spacing="4">
+                                        <Label text="Scan / Enter Physical QR Card Token *" style="-fx-font-size: 11px; -fx-font-weight: 700;"/>
+                                        <HBox spacing="8">
+                                            <TextField fx:id="cardQrField" text="DCR-OP-CARD-001" promptText="e.g. DCR-OP-CARD-001"
+                                                       prefHeight="36" HBox.hgrow="ALWAYS"
+                                                       style="-fx-border-color: #E6E0D3; -fx-border-radius: 6; -fx-font-weight: 700; -fx-text-fill: #07768F;"/>
+                                            <Button text="🔍  Validate" onAction="#handleValidateCard" prefHeight="36" prefWidth="100"
+                                                    style="-fx-background-color: #14161F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                                        </HBox>
+                                        <Label fx:id="cardValidationLabel" text="Please validate QR card before issuing items"
+                                               style="-fx-font-size: 11px; -fx-text-fill: #62656F; -fx-font-weight: 600;"/>
+                                    </VBox>
+
+                                    <Separator style="-fx-padding: 2 0;"/>
+
+                                    <!-- Item Selector -->
+                                    <VBox spacing="4">
+                                        <Label text="Item to Issue *" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                        <ComboBox fx:id="issueItemComboBox" maxWidth="Infinity" prefHeight="34"
+                                                  style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                    </VBox>
+
+                                    <!-- Quantity to Issue -->
+                                    <VBox spacing="4">
+                                        <Label text="Quantity to Issue *" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                        <TextField fx:id="issueQuantityField" text="1" prefHeight="34"
+                                                   style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                    </VBox>
+
+                                    <!-- Associated Order -->
+                                    <VBox spacing="4">
+                                        <Label text="Associated Order (Optional)" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                        <ComboBox fx:id="issueOrderComboBox" maxWidth="Infinity" prefHeight="34"
+                                                  style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                    </VBox>
+
+                                    <!-- Purpose / Remarks -->
+                                    <VBox spacing="4">
+                                        <Label text="Purpose / Remarks" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                        <TextField fx:id="issueRemarksField" promptText="e.g. For vacuum bottle laser engraving" prefHeight="34"
+                                                   style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                    </VBox>
+
+                                    <!-- Issue Button -->
+                                    <Button fx:id="issueStockButton" text="📤   Issue Stock &amp; Log Entry" disable="true"
+                                            maxWidth="Infinity" prefHeight="42"
+                                            onAction="#handleIssueStock"
+                                            style="
+                                                -fx-background-color: #1A7A46;
+                                                -fx-text-fill: white;
+                                                -fx-font-weight: 700;
+                                                -fx-font-size: 13px;
+                                                -fx-background-radius: 8;
+                                                -fx-cursor: hand;"/>
+
+                                    <Label text="Every QR card issue automatically deducts inventory and registers an audit log." wrapText="true"
+                                           style="-fx-font-size: 11px; -fx-text-fill: #62656F; -fx-text-alignment: center;"/>
+
+                                </VBox>
+
+                                <!-- RIGHT: QR INVENTORY AUDIT LOGS -->
+                                <VBox spacing="12" HBox.hgrow="ALWAYS"
+                                      style="
+                                          -fx-background-color: white;
+                                          -fx-background-radius: 14;
+                                          -fx-border-color: #E6E0D3;
+                                          -fx-border-radius: 14;
+                                          -fx-border-width: 1;
+                                          -fx-padding: 18;
+                                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+
+                                    <Label text="QR Card Stock Issue Audit Trail"
+                                           style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+
+                                    <Separator style="-fx-padding: 2 0;"/>
+
+                                    <TableView fx:id="qrLogsTable" VBox.vgrow="ALWAYS" prefHeight="400"
+                                               style="-fx-background-color: transparent; -fx-border-color: #E6E0D3; -fx-border-radius: 8;">
+                                        <columns>
+                                            <TableColumn fx:id="colLogId" text="Log #" prefWidth="60"/>
+                                            <TableColumn fx:id="colLogOperator" text="Operator" prefWidth="130"/>
+                                            <TableColumn fx:id="colLogCard" text="Card Token" prefWidth="130"/>
+                                            <TableColumn fx:id="colLogItem" text="Item Issued" prefWidth="180"/>
+                                            <TableColumn fx:id="colLogQty" text="Qty" prefWidth="65"/>
+                                            <TableColumn fx:id="colLogUnit" text="Unit" prefWidth="60"/>
+                                            <TableColumn fx:id="colLogOrder" text="Order #" prefWidth="110"/>
+                                            <TableColumn fx:id="colLogDate" text="Date &amp; Time" prefWidth="125"/>
+                                            <TableColumn fx:id="colLogRemarks" text="Remarks" prefWidth="130"/>
+                                        </columns>
+                                        <columnResizePolicy>
+                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                        </columnResizePolicy>
+                                    </TableView>
+
+                                </VBox>
+
+                            </HBox>
+                        </Tab>
+
+                    </TabPane>
+
+                </VBox>
+            </center>
+
+        </BorderPane>
+    </center>
+
+</BorderPane>

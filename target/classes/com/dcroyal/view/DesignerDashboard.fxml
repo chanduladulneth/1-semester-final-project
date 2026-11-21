@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<!-- Designer Dashboard Screen -->
+<BorderPane
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.dcroyal.controller.DesignerDashboardController"
+    style="-fx-background-color: #F6F3EC;">
+
+    <!-- Left Sidebar -->
+    <left>
+        <fx:include source="Sidebar.fxml" fx:id="sidebar"/>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <BorderPane style="-fx-background-color: #F6F3EC;">
+
+            <!-- Top Header -->
+            <top>
+                <HBox alignment="CENTER_LEFT"
+                      style="-fx-padding: 26 32 10 32; -fx-background-color: #F6F3EC;">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="DESIGNER"
+                               style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;"/>
+                        <Label text="Designer Dashboard"
+                               style="-fx-font-size: 32px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                    </VBox>
+                </HBox>
+            </top>
+
+            <!-- Scrollable Content -->
+            <center>
+                <ScrollPane
+                    fitToWidth="true"
+                    style="-fx-background-color: #F6F3EC; -fx-border-color: transparent; -fx-padding: 0;">
+                    <VBox spacing="20"
+                          style="-fx-padding: 8 32 40 32; -fx-background-color: #F6F3EC;">
+                        <!-- KPI Cards Row -->
+                        <HBox fx:id="kpiBox" spacing="16" fillHeight="true"/>
+                        <!-- Charts Row -->
+                        <HBox fx:id="chartBox" spacing="16" fillHeight="true"/>
+                    </VBox>
+                </ScrollPane>
+            </center>
+
+        </BorderPane>
+    </center>
+
+</BorderPane>

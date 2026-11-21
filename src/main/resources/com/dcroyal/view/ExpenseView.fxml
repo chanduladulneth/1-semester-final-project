@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="800.0" prefWidth="1280.0"
+            style="-fx-background-color: #F6F3EC; -fx-font-family: 'Segoe UI', sans-serif;"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dcroyal.controller.ExpenseController">
+
+    <!-- Left Navigation Sidebar -->
+    <left>
+        <fx:include source="Sidebar.fxml" />
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <VBox spacing="16.0" style="-fx-background-color: #F6F3EC;">
+            <padding>
+                <Insets bottom="20.0" left="24.0" right="24.0" top="20.0" />
+            </padding>
+
+            <!-- Top Header -->
+            <HBox alignment="CENTER_LEFT" spacing="16.0">
+                <VBox spacing="2.0">
+                    <Label style="-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                           text="Operational Expenses &amp; Ledger" />
+                    <Label style="-fx-font-size: 13px; -fx-text-fill: #62656F;"
+                           text="Reimbursement claims, utility bills, maintenance, Owner approvals &amp; fund transfer settlements" />
+                </VBox>
+                <HBox alignment="CENTER_RIGHT" spacing="12.0" HBox.hgrow="ALWAYS">
+                    <Button onAction="#handleRefresh"
+                            style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 16; -fx-font-weight: 600; -fx-text-fill: #15171F; -fx-cursor: hand;"
+                            text="🔄  Refresh Data" />
+                </HBox>
+            </HBox>
+
+            <!-- Center Content ScrollPane -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                <VBox spacing="16.0">
+
+                    <!-- ROW 1: 4 KPI CARDS -->
+                    <HBox spacing="16.0">
+                        <!-- KPI 1: Settled Expenses -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="TOTAL SETTLED EXPENSES" />
+                                <Label style="-fx-background-color: #DAF2E3; -fx-text-fill: #1A7A46; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="SETTLED" />
+                            </HBox>
+                            <Label fx:id="totalSettledExpensesLabel"
+                                   style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #1A7A46;"
+                                   text="Rs. 0.00" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Completed business disbursements" />
+                        </VBox>
+
+                        <!-- KPI 2: Pending Owner Approval -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="PENDING APPROVAL" />
+                                <Label style="-fx-background-color: #FFF0BF; -fx-text-fill: #6B4D00; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="OWNER" />
+                            </HBox>
+                            <Label fx:id="pendingOwnerCountLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #B8134F;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Awaiting Owner verification" />
+                        </VBox>
+
+                        <!-- KPI 3: Approved / Awaiting Transfer -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="APPROVED CLAIMS" />
+                                <Label style="-fx-background-color: #D8F1F7; -fx-text-fill: #07768F; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="READY" />
+                            </HBox>
+                            <Label fx:id="approvedCountLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #07768F;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Ready for bank transfer record" />
+                        </VBox>
+
+                        <!-- KPI 4: Rejected Claims -->
+                        <VBox spacing="6.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F; -fx-text-transform: uppercase;"
+                                       text="REJECTED CLAIMS" />
+                                <Label style="-fx-background-color: #FBDDEA; -fx-text-fill: #B8134F; -fx-font-size: 10px; -fx-font-weight: 700; -fx-padding: 2 6; -fx-background-radius: 4;"
+                                       text="DECLINED" />
+                            </HBox>
+                            <Label fx:id="rejectedCountLabel"
+                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                   text="0" />
+                            <Label style="-fx-font-size: 11px; -fx-text-fill: #8A8D98;"
+                                   text="Rejected expenditure claims" />
+                        </VBox>
+                    </HBox>
+
+                    <!-- ROW 2: TABPANE -->
+                    <TabPane style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 14; -fx-background-radius: 14;" tabClosingPolicy="UNAVAILABLE">
+                        <tabs>
+
+                            <!-- TAB 1: EXPENSE LEDGER & APPROVALS -->
+                            <Tab text="📋  Expense Ledger &amp; Approvals">
+                                <HBox spacing="18.0" style="-fx-padding: 18;">
+
+                                    <!-- LEFT: EXPENSE TABLE -->
+                                    <VBox spacing="12.0" HBox.hgrow="ALWAYS">
+                                        <!-- Filters Bar -->
+                                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                            <TextField fx:id="searchField" prefHeight="38.0" prefWidth="240.0"
+                                                       promptText="🔍  Search code, desc, ref..."
+                                                       style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 12; -fx-font-size: 13px;" />
+
+                                            <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="Category:" />
+                                            <ComboBox fx:id="categoryFilterComboBox" prefHeight="38.0" prefWidth="150.0"
+                                                      style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" />
+
+                                            <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="Status:" />
+                                            <ComboBox fx:id="statusFilterComboBox" prefHeight="38.0" prefWidth="150.0"
+                                                      style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" />
+                                        </HBox>
+
+                                        <!-- TableView -->
+                                        <TableView fx:id="expenseTable" prefHeight="480.0" style="-fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="colCode" prefWidth="85.0" text="Code" />
+                                                <TableColumn fx:id="colCategory" prefWidth="120.0" text="Category" />
+                                                <TableColumn fx:id="colDescription" prefWidth="180.0" text="Description" />
+                                                <TableColumn fx:id="colAmount" prefWidth="110.0" text="Amount (LKR)" />
+                                                <TableColumn fx:id="colDate" prefWidth="95.0" text="Date" />
+                                                <TableColumn fx:id="colStatus" prefWidth="120.0" text="Status" />
+                                                <TableColumn fx:id="colTransferRef" prefWidth="130.0" text="Bank Transfer Ref" />
+                                                <TableColumn fx:id="colSubmittedBy" prefWidth="110.0" text="Submitted By" />
+                                                <TableColumn fx:id="colApprovedBy" prefWidth="110.0" text="Approved By" />
+                                            </columns>
+                                        </TableView>
+                                    </VBox>
+
+                                    <!-- RIGHT: ACTION & SETTLEMENT PANEL -->
+                                    <VBox prefWidth="360.0" spacing="14.0" style="-fx-background-color: #FAF8F3; -fx-border-color: #E6E0D3; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;">
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                               text="Expense Actions &amp; Transfer" />
+
+                                        <!-- Selected Record Details -->
+                                        <VBox spacing="8.0" style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 12;">
+                                            <Label fx:id="selectedCodeLabel" style="-fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: #15171F;" text="No expense selected" />
+                                            <Label fx:id="selectedCategoryLabel" style="-fx-font-size: 12px; -fx-text-fill: #62656F;" text="Category: -" />
+                                            <Label fx:id="selectedAmountLabel" style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #B8134F;" text="Amount: -" />
+                                            <Label fx:id="selectedDescLabel" style="-fx-font-size: 12px; -fx-text-fill: #15171F;" text="Description: -" wrapText="true" />
+
+                                            <Separator />
+
+                                            <Label fx:id="selectedRefLabel" style="-fx-font-size: 12px; -fx-text-fill: #07768F; -fx-font-weight: 600;" text="Bank Transfer Ref: -" />
+                                        </VBox>
+
+                                        <!-- Action Buttons -->
+                                        <VBox spacing="10.0" style="-fx-padding: 6 0 0 0;">
+                                            <Button fx:id="approveExpenseButton" disable="true" maxWidth="Infinity" onAction="#handleApproveExpense" prefHeight="40.0"
+                                                    style="-fx-background-color: #07768F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                    text="✔  Approve Claim (Owner)" />
+
+                                            <Button fx:id="settleExpenseButton" disable="true" maxWidth="Infinity" onAction="#handleSettleExpense" prefHeight="40.0"
+                                                    style="-fx-background-color: #1A7A46; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                    text="💳  Record Settlement &amp; Transfer" />
+
+                                            <Button fx:id="rejectExpenseButton" disable="true" maxWidth="Infinity" onAction="#handleRejectExpense" prefHeight="36.0"
+                                                    style="-fx-background-color: white; -fx-border-color: #B8134F; -fx-text-fill: #B8134F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand;"
+                                                    text="❌  Reject Claim" />
+
+                                            <Button fx:id="printVoucherButton" disable="true" maxWidth="Infinity" onAction="#handlePrintVoucher" prefHeight="38.0"
+                                                    style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-text-fill: #15171F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand;"
+                                                    text="📄  Print Payment Voucher" />
+                                        </VBox>
+                                    </VBox>
+
+                                </HBox>
+                            </Tab>
+
+                            <!-- TAB 2: RECORD & SUBMIT EXPENSE -->
+                            <Tab text="➕  Record New Expense">
+                                <VBox alignment="TOP_CENTER" spacing="16.0" style="-fx-padding: 24;">
+                                    <VBox maxWidth="560.0" spacing="16.0" style="-fx-background-color: #FAF8F3; -fx-border-color: #E6E0D3; -fx-border-radius: 14; -fx-background-radius: 14; -fx-padding: 22;">
+                                        <Label style="-fx-font-size: 18px; -fx-font-weight: 700; -fx-text-fill: #15171F;"
+                                               text="New Expenditure Record" />
+
+                                        <HBox spacing="14.0">
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="EXPENSE CODE (AUTO)" />
+                                                <TextField fx:id="expenseCodeField" editable="false" prefHeight="36.0"
+                                                           style="-fx-background-color: #E9E6DF; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-font-weight: 700;" />
+                                            </VBox>
+
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="CATEGORY *" />
+                                                <ComboBox fx:id="categoryComboBox" maxWidth="Infinity" prefHeight="36.0"
+                                                          style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+                                        </HBox>
+
+                                        <HBox spacing="14.0">
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="AMOUNT (LKR) *" />
+                                                <TextField fx:id="amountField" prefHeight="36.0" promptText="e.g. 15000.00"
+                                                           style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="EXPENSE DATE *" />
+                                                <DatePicker fx:id="expenseDatePicker" maxWidth="Infinity" prefHeight="36.0"
+                                                            style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+                                        </HBox>
+
+                                        <VBox spacing="4.0">
+                                            <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="DESCRIPTION / PURPOSE *" />
+                                            <TextField fx:id="descriptionField" prefHeight="36.0" promptText="e.g. UV ink refill 5L and machine lubrication"
+                                                       style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                        </VBox>
+
+                                        <HBox spacing="14.0">
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="BANK TRANSFER REF (OPTIONAL)" />
+                                                <TextField fx:id="transferRefField" prefHeight="36.0" promptText="e.g. BOC-TXN-887712"
+                                                           style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+
+                                            <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="INITIAL STATUS" />
+                                                <ComboBox fx:id="statusComboBox" maxWidth="Infinity" prefHeight="36.0"
+                                                          style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
+                                            </VBox>
+                                        </HBox>
+
+                                        <HBox spacing="12.0" style="-fx-padding: 8 0 0 0;">
+                                            <Button fx:id="saveExpenseButton" maxWidth="Infinity" onAction="#handleSubmitExpense" prefHeight="44.0"
+                                                    style="-fx-background-color: #07768F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 8; -fx-cursor: hand;"
+                                                    text="💾  Record &amp; Submit Expense" HBox.hgrow="ALWAYS" />
+
+                                            <Button fx:id="clearFormButton" onAction="#handleClearForm" prefHeight="44.0" prefWidth="120.0"
+                                                    style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-text-fill: #62656F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand;"
+                                                    text="🧹  Clear" />
+                                        </HBox>
+                                    </VBox>
+                                </VBox>
+                            </Tab>
+
+                        </tabs>
+                    </TabPane>
+
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>

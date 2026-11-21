@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.dcroyal.controller.LoginController"
+    style="-fx-background-color: #F6F3EC;">
+
+    <!-- Center Login Card -->
+    <VBox
+        alignment="CENTER"
+        spacing="0"
+        AnchorPane.topAnchor="0"
+        AnchorPane.bottomAnchor="0"
+        AnchorPane.leftAnchor="0"
+        AnchorPane.rightAnchor="0">
+
+        <!-- Login Card Container -->
+        <VBox
+            alignment="TOP_CENTER"
+            spacing="20"
+            maxWidth="420"
+            style="
+                -fx-background-color: white;
+                -fx-background-radius: 20;
+                -fx-border-color: #E6E0D3;
+                -fx-border-radius: 20;
+                -fx-border-width: 1;
+                -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 24, 0, 0, 4);
+                -fx-padding: 40;">
+
+            <!-- ===== LOGO AREA ===== -->
+            <HBox alignment="CENTER_LEFT" spacing="12">
+
+                <!-- 4-Color Square Logo Grid -->
+                <GridPane hgap="4" vgap="4">
+                    <!-- Row 0 -->
+                    <Pane GridPane.columnIndex="0" GridPane.rowIndex="0"
+                          prefWidth="16" prefHeight="16"
+                          style="-fx-background-color: #00AEEF; -fx-background-radius: 4;"/>
+                    <Pane GridPane.columnIndex="1" GridPane.rowIndex="0"
+                          prefWidth="16" prefHeight="16"
+                          style="-fx-background-color: #EC008C; -fx-background-radius: 4;"/>
+                    <!-- Row 1 -->
+                    <Pane GridPane.columnIndex="0" GridPane.rowIndex="1"
+                          prefWidth="16" prefHeight="16"
+                          style="-fx-background-color: #FFE600; -fx-background-radius: 4;"/>
+                    <Pane GridPane.columnIndex="1" GridPane.rowIndex="1"
+                          prefWidth="16" prefHeight="16"
+                          style="-fx-background-color: #15171F; -fx-background-radius: 4;"/>
+                </GridPane>
+
+                <!-- Brand Name -->
+                <VBox spacing="2">
+                    <Label text="DC Royal"
+                           style="-fx-font-size: 22px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                    <Label text="PRINTING"
+                           style="-fx-font-size: 10px; -fx-letter-spacing: 3px; -fx-text-fill: #9DA1B0; -fx-font-weight: 700;"/>
+                </VBox>
+            </HBox>
+
+            <!-- ===== WELCOME TITLE ===== -->
+            <VBox spacing="4">
+                <Label text="Welcome back"
+                       style="-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                <Label text="Sign in to your staff portal"
+                       style="-fx-font-size: 14px; -fx-text-fill: #62656F;"/>
+            </VBox>
+
+            <!-- ===== EMAIL FIELD ===== -->
+            <VBox spacing="6">
+                <Label text="Email address"
+                       style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #464955;"/>
+                <TextField fx:id="emailField"
+                           promptText="e.g. owner@dcroyal.lk"
+                           prefHeight="46"
+                           style="
+                               -fx-background-color: white;
+                               -fx-border-color: #CFC8B8;
+                               -fx-border-radius: 10;
+                               -fx-background-radius: 10;
+                               -fx-border-width: 1;
+                               -fx-padding: 0 12;
+                               -fx-font-size: 14px;"/>
+            </VBox>
+
+            <!-- ===== PASSWORD FIELD ===== -->
+            <VBox spacing="6">
+                <Label text="Password"
+                       style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #464955;"/>
+                <PasswordField fx:id="passwordField"
+                               promptText="Enter your password"
+                               prefHeight="46"
+                               style="
+                                   -fx-background-color: white;
+                                   -fx-border-color: #CFC8B8;
+                                   -fx-border-radius: 10;
+                                   -fx-background-radius: 10;
+                                   -fx-border-width: 1;
+                                   -fx-padding: 0 12;
+                                   -fx-font-size: 14px;"/>
+            </VBox>
+
+            <!-- ===== ERROR MESSAGE ===== -->
+            <Label fx:id="errorLabel"
+                   text=""
+                   visible="false"
+                   wrapText="true"
+                   style="-fx-text-fill: #B8134F; -fx-font-size: 13px; -fx-font-weight: 600;"/>
+
+            <!-- ===== LOGIN BUTTON ===== -->
+            <Button fx:id="loginButton"
+                    text="Sign In"
+                    maxWidth="Infinity"
+                    prefHeight="46"
+                    onAction="#handleLogin"
+                    style="
+                        -fx-background-color: #B8134F;
+                        -fx-text-fill: white;
+                        -fx-font-size: 15px;
+                        -fx-font-weight: 700;
+                        -fx-background-radius: 12;
+                        -fx-cursor: hand;"/>
+
+            <!-- ===== FOOTER NOTE ===== -->
+            <Label text="Forgot password? Contact the owner."
+                   style="-fx-font-size: 12px; -fx-text-fill: #9DA1B0;"/>
+
+        </VBox>
+
+    </VBox>
+
+</AnchorPane>

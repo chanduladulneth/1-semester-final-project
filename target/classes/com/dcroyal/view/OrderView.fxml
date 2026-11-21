@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<!--
+    OrderView.fxml
+    Complete Order Entry, Billing, Cart, Built-in Calculator, and Orders Tracking
+    Controller: com.dcroyal.controller.OrderController
+-->
+<BorderPane
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.dcroyal.controller.OrderController"
+    style="-fx-background-color: #F6F3EC;">
+
+    <!-- Left Sidebar -->
+    <left>
+        <fx:include source="Sidebar.fxml" fx:id="sidebar"/>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <BorderPane style="-fx-background-color: #F6F3EC;">
+
+            <!-- Top Header -->
+            <top>
+                <HBox alignment="CENTER_LEFT" spacing="16"
+                      style="-fx-padding: 22 32 12 32; -fx-background-color: #F6F3EC;">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="ORDERS &amp; BILLING"
+                               style="-fx-font-size: 11px; -fx-font-weight: 700; -fx-text-fill: #62656F; -fx-letter-spacing: 1px;"/>
+                        <Label text="Order Management &amp; Billing"
+                               style="-fx-font-size: 28px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                    </VBox>
+                </HBox>
+            </top>
+
+            <!-- Center TabPane -->
+            <center>
+                <TabPane tabClosingPolicy="UNAVAILABLE"
+                         style="-fx-background-color: #F6F3EC; -fx-padding: 0 32 24 32;">
+
+                    <!-- ========================================== -->
+                    <!-- TAB 1: NEW ORDER ENTRY & BILLING           -->
+                    <!-- ========================================== -->
+                    <Tab text="➕  New Order &amp; Billing">
+                        <ScrollPane fitToWidth="true"
+                                    style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-padding: 12 0 0 0;">
+                            <VBox spacing="16" style="-fx-background-color: #F6F3EC;">
+
+                                <!-- TOP BAR: Customer & Order Meta -->
+                                <HBox spacing="16" alignment="CENTER_LEFT"
+                                      style="
+                                          -fx-background-color: white;
+                                          -fx-background-radius: 14;
+                                          -fx-border-color: #E6E0D3;
+                                          -fx-border-radius: 14;
+                                          -fx-border-width: 1;
+                                          -fx-padding: 16;
+                                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+
+                                    <!-- Customer Selector -->
+                                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                        <Label text="Select Customer *"
+                                               style="-fx-font-size: 12px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                                        <ComboBox fx:id="customerComboBox" promptText="Select customer..."
+                                                  maxWidth="Infinity" prefHeight="36"
+                                                  style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;"/>
+                                        <Label fx:id="customerInfoLabel" text="No customer selected"
+                                               style="-fx-font-size: 11px; -fx-text-fill: #07768F; -fx-font-weight: 600;"/>
+                                    </VBox>
+
+                                    <!-- Order Number -->
+                                    <VBox spacing="4" prefWidth="180">
+                                        <Label text="Order Number"
+                                               style="-fx-font-size: 12px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                                        <TextField fx:id="orderNumberField" editable="false" prefHeight="36"
+                                                   style="-fx-background-color: #F1EFEA; -fx-font-weight: 700; -fx-text-fill: #07768F; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8;"/>
+                                    </VBox>
+
+                                    <!-- QR Code Token -->
+                                    <VBox spacing="4" prefWidth="200" alignment="CENTER_LEFT">
+                                        <Label text="QR Code Token"
+                                               style="-fx-font-size: 12px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                                        <Label fx:id="qrTokenLabel" text="QR-ORD-..."
+                                               prefHeight="36" maxWidth="Infinity" alignment="CENTER"
+                                               style="-fx-background-color: #F6F3EC; -fx-font-weight: 700; -fx-text-fill: #14161F; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-size: 11px;"/>
+                                    </VBox>
+
+                                    <!-- Due Date -->
+                                    <VBox spacing="4" prefWidth="160">
+                                        <Label text="Due Date"
+                                               style="-fx-font-size: 12px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                                        <DatePicker fx:id="dueDatePicker" prefHeight="36" maxWidth="Infinity"/>
+                                    </VBox>
+
+                                </HBox>
+
+                                <!-- TWO COLUMNS: ITEMS ENTRY (LEFT) & BILLING (RIGHT) -->
+                                <HBox spacing="16">
+
+                                    <!-- LEFT: ADD ITEMS + CART TABLE -->
+                                    <VBox spacing="14" HBox.hgrow="ALWAYS"
+                                          style="
+                                              -fx-background-color: white;
+                                              -fx-background-radius: 14;
+                                              -fx-border-color: #E6E0D3;
+                                              -fx-border-radius: 14;
+                                              -fx-border-width: 1;
+                                              -fx-padding: 18;
+                                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+
+                                        <Label text="1. Print Item Details"
+                                               style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+
+                                        <!-- Item inputs row 1 -->
+                                        <HBox spacing="10">
+                                            <VBox spacing="4" prefWidth="140">
+                                                <Label text="Print Type" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                                <ComboBox fx:id="printTypeComboBox" maxWidth="Infinity" prefHeight="34"
+                                                          style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                            </VBox>
+
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="Item Name *" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                                <TextField fx:id="itemNameField" promptText="e.g. Custom T-Shirt, Bottle" prefHeight="34"
+                                                           style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                            </VBox>
+
+                                            <VBox spacing="4" prefWidth="140">
+                                                <Label text="Material / Substrate" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                                <ComboBox fx:id="materialComboBox" maxWidth="Infinity" prefHeight="34"
+                                                          style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                            </VBox>
+                                        </HBox>
+
+                                        <!-- Item inputs row 2 -->
+                                        <HBox spacing="10" alignment="BOTTOM_LEFT">
+                                            <VBox spacing="4" prefWidth="90">
+                                                <Label text="Quantity *" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                                <TextField fx:id="quantityField" text="1" prefHeight="34" alignment="CENTER"
+                                                           style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                            </VBox>
+
+                                            <VBox spacing="4" prefWidth="130">
+                                                <Label text="Unit Price (LKR) *" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                                <TextField fx:id="unitPriceField" promptText="0.00" prefHeight="34"
+                                                           style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                            </VBox>
+
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="Specifications / Notes" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                                <TextField fx:id="specificationsField" promptText="e.g. Front A4, Rotary wrap, White ink" prefHeight="34"
+                                                           style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                            </VBox>
+
+                                            <Button fx:id="addItemButton" text="➕  Add Item" prefHeight="34" prefWidth="110"
+                                                    onAction="#handleAddItem"
+                                                    style="-fx-background-color: #07768F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                                        </HBox>
+
+                                        <Separator style="-fx-padding: 4 0;"/>
+
+                                        <!-- Items Cart Table -->
+                                        <TableView fx:id="itemsTable" prefHeight="220" VBox.vgrow="ALWAYS"
+                                                   style="-fx-background-color: transparent; -fx-border-color: #E6E0D3; -fx-border-radius: 8;">
+                                            <columns>
+                                                <TableColumn fx:id="colItemPrintType" text="Print Type" prefWidth="100"/>
+                                                <TableColumn fx:id="colItemName" text="Item Name" prefWidth="160"/>
+                                                <TableColumn fx:id="colItemMaterial" text="Material" prefWidth="110"/>
+                                                <TableColumn fx:id="colItemQty" text="Qty" prefWidth="50"/>
+                                                <TableColumn fx:id="colItemUnitPrice" text="Unit Price" prefWidth="90"/>
+                                                <TableColumn fx:id="colItemLineTotal" text="Line Total" prefWidth="100"/>
+                                                <TableColumn fx:id="colItemSpecs" text="Specs" prefWidth="120"/>
+                                            </columns>
+                                            <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                            </columnResizePolicy>
+                                        </TableView>
+
+                                        <!-- Remove Item Button -->
+                                        <HBox alignment="CENTER_RIGHT">
+                                            <Button text="🗑️  Remove Selected Item" onAction="#handleRemoveItem"
+                                                    style="-fx-background-color: #FFF0F4; -fx-text-fill: #B8134F; -fx-font-weight: 600; -fx-border-color: #F8B4C8; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                                        </HBox>
+
+                                    </VBox>
+
+                                    <!-- RIGHT: DELIVERY, BILLING & CALCULATOR -->
+                                    <VBox spacing="14" prefWidth="380" minWidth="340"
+                                          style="
+                                              -fx-background-color: white;
+                                              -fx-background-radius: 14;
+                                              -fx-border-color: #E6E0D3;
+                                              -fx-border-radius: 14;
+                                              -fx-border-width: 1;
+                                              -fx-padding: 18;
+                                              -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 6, 0, 0, 1);">
+
+                                        <!-- Section 2: Delivery -->
+                                        <Label text="2. Delivery Options"
+                                               style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+
+                                        <CheckBox fx:id="deliveryCheckBox" text="Island-wide Delivery Required"
+                                                  style="-fx-font-weight: 600; -fx-text-fill: #15171F;"/>
+
+                                        <HBox spacing="10">
+                                            <VBox spacing="4" prefWidth="150">
+                                                <Label text="Delivery City" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                                <TextField fx:id="deliveryCityField" disable="true" promptText="e.g. Kandy" prefHeight="32"
+                                                           style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                            </VBox>
+                                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                                <Label text="Delivery Fee (LKR)" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                                <TextField fx:id="deliveryFeeField" disable="true" text="0.00" prefHeight="32"
+                                                           style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                            </VBox>
+                                        </HBox>
+
+                                        <VBox spacing="4">
+                                            <Label text="Delivery Address" style="-fx-font-size: 11px; -fx-font-weight: 600;"/>
+                                            <TextArea fx:id="deliveryAddressArea" disable="true" prefRowCount="2" promptText="Delivery street address..." wrapText="true"
+                                                      style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                        </VBox>
+
+                                        <Separator style="-fx-padding: 2 0;"/>
+
+                                        <!-- Section 3: Billing & Financials -->
+                                        <Label text="3. Billing &amp; Calculator"
+                                               style="-fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+
+                                        <!-- Subtotal Row -->
+                                        <HBox alignment="CENTER_LEFT">
+                                            <Label text="Subtotal:" style="-fx-font-size: 13px; -fx-text-fill: #62656F; -fx-font-weight: 600;" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                                            <Label fx:id="subtotalLabel" text="LKR 0.00" style="-fx-font-size: 14px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                                        </HBox>
+
+                                        <!-- Discount Row -->
+                                        <HBox alignment="CENTER_LEFT" spacing="10">
+                                            <Label text="Discount (LKR):" style="-fx-font-size: 12px; -fx-text-fill: #62656F; -fx-font-weight: 600;" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                                            <TextField fx:id="discountField" text="0.00" prefWidth="120" prefHeight="30" alignment="CENTER_RIGHT"
+                                                       style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                        </HBox>
+
+                                        <!-- Payment Status -->
+                                        <HBox alignment="CENTER_LEFT" spacing="10">
+                                            <Label text="Payment Status:" style="-fx-font-size: 12px; -fx-text-fill: #62656F; -fx-font-weight: 600;" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                                            <ComboBox fx:id="paymentStatusComboBox" prefWidth="120" prefHeight="30"
+                                                      style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+                                        </HBox>
+
+                                        <!-- Net Total Card -->
+                                        <VBox spacing="4" alignment="CENTER"
+                                              style="-fx-background-color: #14161F; -fx-background-radius: 10; -fx-padding: 12;">
+                                            <Label text="NET TOTAL AMOUNT"
+                                                   style="-fx-font-size: 11px; -fx-font-weight: 700; -fx-text-fill: #9DA1B0; -fx-letter-spacing: 1px;"/>
+                                            <Label fx:id="netTotalLabel" text="LKR 0.00"
+                                                   style="-fx-font-size: 26px; -fx-font-weight: 700; -fx-text-fill: #FFE600;"/>
+                                        </VBox>
+
+                                        <!-- Quick Change Calculator -->
+                                        <HBox spacing="10" alignment="CENTER_LEFT"
+                                              style="-fx-background-color: #F6F3EC; -fx-background-radius: 8; -fx-padding: 8 10;">
+                                            <Label text="Cash Paid:" style="-fx-font-size: 12px; -fx-font-weight: 600;"/>
+                                            <TextField fx:id="cashPaidField" promptText="0.00" prefWidth="100" prefHeight="28"
+                                                       style="-fx-border-color: #E6E0D3; -fx-border-radius: 4;"/>
+                                            <Label fx:id="balanceChangeLabel" text="LKR 0.00" HBox.hgrow="ALWAYS" alignment="CENTER_RIGHT" maxWidth="Infinity"
+                                                   style="-fx-font-size: 13px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                                        </HBox>
+
+                                        <!-- Place Order Button -->
+                                        <Button text="💾  Place Order &amp; Generate Bill"
+                                                maxWidth="Infinity" prefHeight="44"
+                                                onAction="#handlePlaceOrder"
+                                                style="
+                                                    -fx-background-color: #1A7A46;
+                                                    -fx-text-fill: white;
+                                                    -fx-font-weight: 700;
+                                                    -fx-font-size: 14px;
+                                                    -fx-background-radius: 10;
+                                                    -fx-cursor: hand;"/>
+
+                                        <!-- Reset Order Button -->
+                                        <Button text="🔄  Reset Form"
+                                                maxWidth="Infinity" prefHeight="32"
+                                                onAction="#handleResetOrder"
+                                                style="-fx-background-color: #EBE7DF; -fx-text-fill: #62656F; -fx-font-weight: 600; -fx-background-radius: 8; -fx-cursor: hand;"/>
+
+                                    </VBox>
+
+                                </HBox>
+
+                            </VBox>
+                        </ScrollPane>
+                    </Tab>
+
+                    <!-- ========================================== -->
+                    <!-- TAB 2: ORDERS DIRECTORY & TRACKING         -->
+                    <!-- ========================================== -->
+                    <Tab text="📋  Orders Directory &amp; Tracking">
+                        <VBox spacing="14"
+                              style="
+                                  -fx-background-color: white;
+                                  -fx-background-radius: 16;
+                                  -fx-border-color: #E6E0D3;
+                                  -fx-border-radius: 16;
+                                  -fx-border-width: 1;
+                                  -fx-padding: 20;
+                                  -fx-margin: 12 0 0 0;
+                                  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 8, 0, 0, 1);">
+
+                            <!-- Filter & Search Controls Bar -->
+                            <HBox spacing="12" alignment="CENTER_LEFT">
+                                <Label text="Status Filter:" style="-fx-font-size: 12px; -fx-font-weight: 600;"/>
+                                <ComboBox fx:id="filterStatusComboBox" prefWidth="160" prefHeight="36"
+                                          style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;"/>
+
+                                <Region HBox.hgrow="ALWAYS"/>
+
+                                <TextField fx:id="searchOrderField" promptText="🔍  Search by order #, QR, or customer..."
+                                           prefWidth="320" prefHeight="36"
+                                           style="-fx-background-color: white; -fx-border-color: #E6E0D3; -fx-border-radius: 6; -fx-padding: 0 10;"/>
+
+                                <Button text="⚡  Advance Status" onAction="#handleAdvanceStatus" prefHeight="36"
+                                        style="-fx-background-color: #07768F; -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                            </HBox>
+
+                            <!-- Orders TableView -->
+                            <TableView fx:id="ordersTable" VBox.vgrow="ALWAYS" prefHeight="450"
+                                       style="-fx-background-color: transparent; -fx-border-color: #E6E0D3; -fx-border-radius: 8;">
+                                <columns>
+                                    <TableColumn fx:id="colOrderNumber" text="Order #" prefWidth="120"/>
+                                    <TableColumn fx:id="colOrderQr" text="QR Token" prefWidth="140"/>
+                                    <TableColumn fx:id="colOrderCustomer" text="Customer" prefWidth="160"/>
+                                    <TableColumn fx:id="colOrderPhone" text="Phone" prefWidth="110"/>
+                                    <TableColumn fx:id="colOrderTotal" text="Total (LKR)" prefWidth="100"/>
+                                    <TableColumn fx:id="colOrderPayment" text="Payment" prefWidth="90"/>
+                                    <TableColumn fx:id="colOrderStatus" text="Order Status" prefWidth="140"/>
+                                    <TableColumn fx:id="colOrderDate" text="Date Placed" prefWidth="130"/>
+                                </columns>
+                                <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                </columnResizePolicy>
+                            </TableView>
+
+                        </VBox>
+                    </Tab>
+
+                </TabPane>
+            </center>
+
+        </BorderPane>
+    </center>
+
+</BorderPane>
