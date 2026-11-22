@@ -6,6 +6,7 @@ import com.dcroyal.util.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -88,7 +89,13 @@ public class LoginController {
 
             } else {
                 // No matching user found
-                showError("Invalid email or password. Please try again.");
+                errorLabel.setText("");
+                errorLabel.setVisible(false);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Sign-in failed");
+                alert.setHeaderText("Invalid credentials");
+                alert.setContentText("The email or password is incorrect. Please try again.");
+                alert.showAndWait();
             }
 
         } catch (SQLException e) {
