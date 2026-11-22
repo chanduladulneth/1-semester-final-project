@@ -40,7 +40,7 @@ public class UserController {
     @FXML private TableView<UserTM> userTable;
     @FXML private TableColumn<UserTM, Integer> colId;
     @FXML private TableColumn<UserTM, String>  colName;
-    @FXML private TableColumn<UserTM, String>  colEmail;
+    @FXML private TableColumn<UserTM, String>  colUsername;
     @FXML private TableColumn<UserTM, String>  colRole;
     @FXML private TableColumn<UserTM, String>  colStatus;
     @FXML private TableColumn<UserTM, String>  colRegistered;
@@ -51,7 +51,7 @@ public class UserController {
     // User Form Controls
     @FXML private Label            userAvatarLabel;
     @FXML private TextField        nameField;
-    @FXML private TextField        emailField;
+    @FXML private TextField        usernameField;
     @FXML private PasswordField    passwordField;
     @FXML private ComboBox<String> roleComboBox;
     @FXML private CheckBox         activeCheckBox;
@@ -90,7 +90,7 @@ public class UserController {
         // --- 1. Tab 1 User Table Setup ---
         colId.setCellValueFactory(new PropertyValueFactory<>("userId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         colRole.setCellValueFactory(new PropertyValueFactory<>("roleName"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colRegistered.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
@@ -207,7 +207,7 @@ public class UserController {
     // ============================================================
     private void loadAllUsers() {
         userList.clear();
-        String sql = "SELECT u.user_id, u.full_name, u.email, u.role_id, r.role_code, r.role_name, " +
+        String sql = "SELECT u.user_id, u.full_name, u.username, u.role_id, r.role_code, r.role_name, " +
                      "u.is_active, DATE_FORMAT(u.created_at, '%Y-%m-%d %H:%i') as reg_date " +
                      "FROM users u " +
                      "JOIN roles r ON u.role_id = r.role_id " +
@@ -220,7 +220,7 @@ public class UserController {
                 UserTM tm = new UserTM(
                         rs.getInt("user_id"),
                         rs.getString("full_name"),
-                        rs.getString("email"),
+                        rs.getString("username"),
                         rs.getInt("role_id"),
                         rs.getString("role_code"),
                         rs.getString("role_name"),
@@ -278,7 +278,7 @@ public class UserController {
         }
 
         nameField.setText(tm.getFullName());
-        emailField.setText(tm.getEmail());
+        usernameField.setText(tm.getUsername());
         passwordField.clear();
         roleComboBox.setValue(tm.getRoleName());
         activeCheckBox.setSelected(tm.isActive());
@@ -299,13 +299,13 @@ public class UserController {
     @FXML
     private void handleAddUser() {
         String name = nameField.getText().trim();
-        String email = emailField.getText().trim();
+        String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
         int roleIdx = roleComboBox.getSelectionModel().getSelectedIndex();
         boolean isActive = activeCheckBox.isSelected();
 
-        if (name.isEmpty() || email.isEmpty() || roleIdx < 0) {
-            showAlert(Alert.AlertType.WARNING, "Missing Fields", "Full Name, Email, and Role are mandatory.");
+        if (name.isEmpty() || username.isEmpty() || roleIdx < 0) {
+            showAlert(Alert.AlertType.WARNING, "Missing Fields", "Full Name, Username, and Role are mandatory.");
             return;
         }
 
@@ -315,14 +315,14 @@ public class UserController {
 
         int roleId = roleIdList.get(roleIdx);
 
-        String sql = "INSERT INTO users (role_id, full_name, email, password_hash, is_active) " +
+        String sql = "INSERT INTO users (role_id, full_name, username, password_hash, is_active) " +
                      "VALUES (?, ?, ?, ?, ?)";
         try {
             Connection con = DBConnection.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, roleId);
             ps.setString(2, name);
-            ps.setString(3, email);
+            ps.setString(3, username);
             ps.setString(4, password);
             ps.setInt(5, isActive ? 1 : 0);
 
@@ -351,13 +351,13 @@ public class UserController {
         if (selectedUser == null) return;
 
         String name = nameField.getText().trim();
-        String email = emailField.getText().trim();
+        String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
         int roleIdx = roleComboBox.getSelectionModel().getSelectedIndex();
         boolean isActive = activeCheckBox.isSelected();
 
-        if (name.isEmpty() || email.isEmpty() || roleIdx < 0) {
-            showAlert(Alert.AlertType.WARNING, "Missing Fields", "Full Name, Email, and Role are mandatory.");
+        if (name.isEmpty() || username.isEmpty() || roleIdx < 0) {
+            showAlert(Alert.AlertType.WARNING, "Missing Fields", "Full Name, Username, and Role are mandatory.");
             return;
         }
 
@@ -365,9 +365,9 @@ public class UserController {
 
         String sql;
         if (password.isEmpty()) {
-            sql = "UPDATE users SET role_id = ?, full_name = ?, email = ?, is_active = ? WHERE user_id = ?";
+            sql = "UPDATE users SET role_id = ?, full_name = ?, username = ?, is_active = ? WHERE user_id = ?";
         } else {
-            sql = "UPDATE users SET role_id = ?, full_name = ?, email = ?, password_hash = ?, is_active = ? WHERE user_id = ?";
+            sql = "UPDATE users SET role_id = ?, full_name = ?, username = ?, password_hash = ?, is_active = ? WHERE user_id = ?";
         }
 
         try {
@@ -375,7 +375,7 @@ public class UserController {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, roleId);
             ps.setString(2, name);
-            ps.setString(3, email);
+            ps.setString(3, username);
 
             int pIdx = 4;
             if (!password.isEmpty()) {
@@ -489,7 +489,7 @@ public class UserController {
         selectedUser = null;
         userTable.getSelectionModel().clearSelection();
         nameField.clear();
-        emailField.clear();
+        usernameField.clear();
         passwordField.clear();
         activeCheckBox.setSelected(true);
         userAvatarLabel.setText("DC");
@@ -516,7 +516,7 @@ public class UserController {
                 }
                 String filter = newValue.toLowerCase().trim();
                 return u.getFullName().toLowerCase().contains(filter) ||
-                       u.getEmail().toLowerCase().contains(filter) ||
+                       u.getUsername().toLowerCase().contains(filter) ||
                        u.getRoleName().toLowerCase().contains(filter) ||
                        u.getStatus().toLowerCase().contains(filter);
             });

@@ -10,7 +10,7 @@ public class CustomerDTO {
     private String customerCode;
     private String fullName;
     private String phone;
-    private String email;
+    private String username;
     private String address;
     private String city;
     private int createdBy;
@@ -18,22 +18,22 @@ public class CustomerDTO {
     public CustomerDTO() {
     }
 
-    public CustomerDTO(int customerId, String customerCode, String fullName, String phone, String email, String address, String city, int createdBy) {
+    public CustomerDTO(int customerId, String customerCode, String fullName, String phone, String username, String address, String city, int createdBy) {
         this.customerId = customerId;
         this.customerCode = customerCode;
         this.fullName = fullName;
         this.phone = phone;
-        this.email = email;
+        this.username = username;
         this.address = address;
         this.city = city;
         this.createdBy = createdBy;
     }
 
-    public CustomerDTO(String customerCode, String fullName, String phone, String email, String address, String city, int createdBy) {
+    public CustomerDTO(String customerCode, String fullName, String phone, String username, String address, String city, int createdBy) {
         this.customerCode = customerCode;
         this.fullName = fullName;
         this.phone = phone;
-        this.email = email;
+        this.username = username;
         this.address = address;
         this.city = city;
         this.createdBy = createdBy;
@@ -71,12 +71,12 @@ public class CustomerDTO {
         this.phone = phone;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getAddress() {

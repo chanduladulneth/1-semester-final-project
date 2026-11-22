@@ -52,7 +52,7 @@ public class EmployeeController {
     @FXML private TableColumn<EmployeeTM, Integer> colId;
     @FXML private TableColumn<EmployeeTM, String>  colName;
     @FXML private TableColumn<EmployeeTM, String>  colRole;
-    @FXML private TableColumn<EmployeeTM, String>  colEmail;
+    @FXML private TableColumn<EmployeeTM, String>  colUsername;
     @FXML private TableColumn<EmployeeTM, String>  colPhone;
     @FXML private TableColumn<EmployeeTM, String>  colNic;
     @FXML private TableColumn<EmployeeTM, String>  colBasicSalary;
@@ -63,7 +63,7 @@ public class EmployeeController {
 
     // Staff Form Controls
     @FXML private TextField        nameField;
-    @FXML private TextField        emailField;
+    @FXML private TextField        usernameField;
     @FXML private PasswordField    passwordField;
     @FXML private ComboBox<String> roleComboBox;
     @FXML private TextField        phoneField;
@@ -126,7 +126,7 @@ public class EmployeeController {
         colId.setCellValueFactory(new PropertyValueFactory<>("userId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         colRole.setCellValueFactory(new PropertyValueFactory<>("roleName"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colNic.setCellValueFactory(new PropertyValueFactory<>("nic"));
         colBasicSalary.setCellValueFactory(new PropertyValueFactory<>("basicSalaryFormatted"));
@@ -269,7 +269,7 @@ public class EmployeeController {
     // ============================================================
     private void loadAllEmployees() {
         employeeList.clear();
-        String sql = "SELECT u.user_id, u.full_name, r.role_name, u.email, u.phone, u.nic, " +
+        String sql = "SELECT u.user_id, u.full_name, r.role_name, u.username, u.phone, u.nic, " +
                      "u.basic_salary, u.is_active " +
                      "FROM users u " +
                      "JOIN roles r ON u.role_id = r.role_id " +
@@ -283,7 +283,7 @@ public class EmployeeController {
                         rs.getInt("user_id"),
                         rs.getString("full_name"),
                         rs.getString("role_name"),
-                        rs.getString("email"),
+                        rs.getString("username"),
                         rs.getString("phone"),
                         rs.getString("nic"),
                         rs.getDouble("basic_salary"),
@@ -386,7 +386,7 @@ public class EmployeeController {
         }
 
         nameField.setText(tm.getFullName());
-        emailField.setText(tm.getEmail());
+        usernameField.setText(tm.getUsername());
         passwordField.clear(); // Leave blank unless resetting
         roleComboBox.setValue(tm.getRoleName());
         phoneField.setText(tm.getPhone().equals("-") ? "" : tm.getPhone());
@@ -409,15 +409,15 @@ public class EmployeeController {
     @FXML
     private void handleAddEmployee() {
         String name = nameField.getText().trim();
-        String email = emailField.getText().trim();
+        String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
         String phone = phoneField.getText().trim();
         String nic = nicField.getText().trim();
         String salaryStr = basicSalaryField.getText().trim();
         int roleIdx = roleComboBox.getSelectionModel().getSelectedIndex();
 
-        if (name.isEmpty() || email.isEmpty() || roleIdx < 0) {
-            showAlert(Alert.AlertType.WARNING, "Validation Error", "Full Name, Email, and Role are mandatory.");
+        if (name.isEmpty() || username.isEmpty() || roleIdx < 0) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Full Name, Username, and Role are mandatory.");
             return;
         }
 
@@ -438,14 +438,14 @@ public class EmployeeController {
         int roleId = roleIdList.get(roleIdx);
         boolean isActive = activeCheckBox.isSelected();
 
-        String sql = "INSERT INTO users (role_id, full_name, email, password_hash, phone, nic, basic_salary, is_active) " +
+        String sql = "INSERT INTO users (role_id, full_name, username, password_hash, phone, nic, basic_salary, is_active) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             Connection con = DBConnection.getConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, roleId);
             ps.setString(2, name);
-            ps.setString(3, email);
+            ps.setString(3, username);
             ps.setString(4, password);
             ps.setString(5, phone.isEmpty() ? null : phone);
             ps.setString(6, nic.isEmpty() ? null : nic);
@@ -476,15 +476,15 @@ public class EmployeeController {
         if (selectedEmployee == null) return;
 
         String name = nameField.getText().trim();
-        String email = emailField.getText().trim();
+        String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
         String phone = phoneField.getText().trim();
         String nic = nicField.getText().trim();
         String salaryStr = basicSalaryField.getText().trim();
         int roleIdx = roleComboBox.getSelectionModel().getSelectedIndex();
 
-        if (name.isEmpty() || email.isEmpty() || roleIdx < 0) {
-            showAlert(Alert.AlertType.WARNING, "Validation Error", "Full Name, Email, and Role are mandatory.");
+        if (name.isEmpty() || username.isEmpty() || roleIdx < 0) {
+            showAlert(Alert.AlertType.WARNING, "Validation Error", "Full Name, Username, and Role are mandatory.");
             return;
         }
 
@@ -503,10 +503,10 @@ public class EmployeeController {
 
         String sql;
         if (password.isEmpty()) {
-            sql = "UPDATE users SET role_id = ?, full_name = ?, email = ?, phone = ?, nic = ?, " +
+            sql = "UPDATE users SET role_id = ?, full_name = ?, username = ?, phone = ?, nic = ?, " +
                   "basic_salary = ?, is_active = ? WHERE user_id = ?";
         } else {
-            sql = "UPDATE users SET role_id = ?, full_name = ?, email = ?, password_hash = ?, " +
+            sql = "UPDATE users SET role_id = ?, full_name = ?, username = ?, password_hash = ?, " +
                   "phone = ?, nic = ?, basic_salary = ?, is_active = ? WHERE user_id = ?";
         }
 
@@ -515,7 +515,7 @@ public class EmployeeController {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, roleId);
             ps.setString(2, name);
-            ps.setString(3, email);
+            ps.setString(3, username);
 
             int paramIndex = 4;
             if (!password.isEmpty()) {
@@ -633,7 +633,7 @@ public class EmployeeController {
         selectedEmployee = null;
         employeeTable.getSelectionModel().clearSelection();
         nameField.clear();
-        emailField.clear();
+        usernameField.clear();
         passwordField.clear();
         phoneField.clear();
         nicField.clear();
@@ -697,8 +697,8 @@ public class EmployeeController {
         idVal.setStyle("-fx-font-weight: 700;");
         detailsGrid.add(idVal, 1, 0);
 
-        detailsGrid.add(new Label("Email:"), 0, 1);
-        detailsGrid.add(new Label(selectedEmployee.getEmail()), 1, 1);
+        detailsGrid.add(new Label("Username:"), 0, 1);
+        detailsGrid.add(new Label(selectedEmployee.getUsername()), 1, 1);
 
         detailsGrid.add(new Label("Phone:"), 0, 2);
         detailsGrid.add(new Label(selectedEmployee.getPhone()), 1, 2);
@@ -980,7 +980,7 @@ public class EmployeeController {
                 }
                 String filter = newValue.toLowerCase().trim();
                 return emp.getFullName().toLowerCase().contains(filter) ||
-                       emp.getEmail().toLowerCase().contains(filter) ||
+                       emp.getUsername().toLowerCase().contains(filter) ||
                        emp.getRoleName().toLowerCase().contains(filter) ||
                        emp.getPhone().contains(filter) ||
                        emp.getNic().toLowerCase().contains(filter);

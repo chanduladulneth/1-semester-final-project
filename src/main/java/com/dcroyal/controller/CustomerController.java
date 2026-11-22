@@ -33,7 +33,7 @@ public class CustomerController {
     @FXML private TextField customerCodeField;
     @FXML private TextField fullNameField;
     @FXML private TextField phoneField;
-    @FXML private TextField emailField;
+    @FXML private TextField usernameField;
     @FXML private TextField cityField;
     @FXML private TextArea  addressField;
     @FXML private TextField searchField;
@@ -49,7 +49,7 @@ public class CustomerController {
     @FXML private TableColumn<CustomerTM, String> colCode;
     @FXML private TableColumn<CustomerTM, String> colName;
     @FXML private TableColumn<CustomerTM, String> colPhone;
-    @FXML private TableColumn<CustomerTM, String> colEmail;
+    @FXML private TableColumn<CustomerTM, String> colUsername;
     @FXML private TableColumn<CustomerTM, String> colCity;
     @FXML private TableColumn<CustomerTM, String> colAddress;
 
@@ -65,7 +65,7 @@ public class CustomerController {
         colCode.setCellValueFactory(new PropertyValueFactory<>("customerCode"));
         colName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         colCity.setCellValueFactory(new PropertyValueFactory<>("city"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
 
@@ -91,7 +91,7 @@ public class CustomerController {
     // ============================================================
     private void loadAllCustomers() {
         customerList.clear();
-        String sql = "SELECT customer_code, full_name, phone, email, city, address " +
+        String sql = "SELECT customer_code, full_name, phone, username, city, address " +
                      "FROM customers ORDER BY customer_id DESC";
 
         try {
@@ -104,7 +104,7 @@ public class CustomerController {
                         rs.getString("customer_code"),
                         rs.getString("full_name"),
                         rs.getString("phone"),
-                        rs.getString("email") != null ? rs.getString("email") : "",
+                        rs.getString("username") != null ? rs.getString("username") : "",
                         rs.getString("city") != null ? rs.getString("city") : "",
                         rs.getString("address") != null ? rs.getString("address") : ""
                 );
@@ -160,7 +160,7 @@ public class CustomerController {
         customerCodeField.setText(tm.getCustomerCode());
         fullNameField.setText(tm.getFullName());
         phoneField.setText(tm.getPhone());
-        emailField.setText(tm.getEmail());
+        usernameField.setText(tm.getUsername());
         cityField.setText(tm.getCity());
         addressField.setText(tm.getAddress());
 
@@ -179,7 +179,7 @@ public class CustomerController {
         String code    = customerCodeField.getText().trim();
         String name    = fullNameField.getText().trim();
         String phone   = phoneField.getText().trim();
-        String email   = emailField.getText().trim();
+        String username = usernameField.getText().trim();
         String city    = cityField.getText().trim();
         String address = addressField.getText().trim();
 
@@ -198,7 +198,7 @@ public class CustomerController {
 
         int userId = Session.getCurrentUser() != null ? Session.getCurrentUser().getUserId() : 1;
 
-        String sql = "INSERT INTO customers (customer_code, full_name, phone, email, address, city, created_by) " +
+        String sql = "INSERT INTO customers (customer_code, full_name, phone, username, address, city, created_by) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try {
@@ -207,7 +207,7 @@ public class CustomerController {
             ps.setString(1, code);
             ps.setString(2, name);
             ps.setString(3, phone);
-            ps.setString(4, email.isEmpty() ? null : email);
+            ps.setString(4, username.isEmpty() ? null : username);
             ps.setString(5, address.isEmpty() ? null : address);
             ps.setString(6, city.isEmpty() ? null : city);
             ps.setInt(7, userId);
@@ -234,7 +234,7 @@ public class CustomerController {
         String code    = customerCodeField.getText().trim();
         String name    = fullNameField.getText().trim();
         String phone   = phoneField.getText().trim();
-        String email   = emailField.getText().trim();
+        String username = usernameField.getText().trim();
         String city    = cityField.getText().trim();
         String address = addressField.getText().trim();
 
@@ -243,7 +243,7 @@ public class CustomerController {
             return;
         }
 
-        String sql = "UPDATE customers SET full_name = ?, phone = ?, email = ?, address = ?, city = ? " +
+        String sql = "UPDATE customers SET full_name = ?, phone = ?, username = ?, address = ?, city = ? " +
                      "WHERE customer_code = ?";
 
         try {
@@ -251,7 +251,7 @@ public class CustomerController {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, phone);
-            ps.setString(3, email.isEmpty() ? null : email);
+            ps.setString(3, username.isEmpty() ? null : username);
             ps.setString(4, address.isEmpty() ? null : address);
             ps.setString(5, city.isEmpty() ? null : city);
             ps.setString(6, code);
@@ -342,7 +342,7 @@ public class CustomerController {
     private void handleClear() {
         fullNameField.clear();
         phoneField.clear();
-        emailField.clear();
+        usernameField.clear();
         cityField.clear();
         addressField.clear();
         searchField.clear();

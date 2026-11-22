@@ -121,11 +121,11 @@
                                            -fx-border-width: 1;"/>
                         </VBox>
 
-                        <!-- Email Address -->
+                        <!-- Username -->
                         <VBox spacing="4">
-                            <Label text="Email Address"
+                            <Label text="Username"
                                    style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #15171F;"/>
-                            <TextField fx:id="emailField" promptText="e.g. nipun@example.com"
+                            <TextField fx:id="usernameField" promptText="Enter username"
                                        prefHeight="36"
                                        style="
                                            -fx-background-color: white;
@@ -251,7 +251,7 @@
                                 <TableColumn fx:id="colCode" text="Code" prefWidth="90"/>
                                 <TableColumn fx:id="colName" text="Full Name" prefWidth="160"/>
                                 <TableColumn fx:id="colPhone" text="Phone Number" prefWidth="120"/>
-                                <TableColumn fx:id="colEmail" text="Email" prefWidth="160"/>
+                                <TableColumn fx:id="colUsername" text="Username" prefWidth="160"/>
                                 <TableColumn fx:id="colCity" text="City" prefWidth="100"/>
                                 <TableColumn fx:id="colAddress" text="Delivery Address" prefWidth="200"/>
                             </columns>
