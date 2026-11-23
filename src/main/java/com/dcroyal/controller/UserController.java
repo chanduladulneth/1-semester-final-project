@@ -3,6 +3,7 @@ package com.dcroyal.controller;
 import com.dcroyal.db.DBConnection;
 import com.dcroyal.tm.RoleTM;
 import com.dcroyal.tm.UserTM;
+import com.dcroyal.util.PasswordUtil;
 import com.dcroyal.util.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -323,7 +324,7 @@ public class UserController {
             ps.setInt(1, roleId);
             ps.setString(2, name);
             ps.setString(3, username);
-            ps.setString(4, password);
+            ps.setString(4, PasswordUtil.hash(password));
             ps.setInt(5, isActive ? 1 : 0);
 
             int rows = ps.executeUpdate();
@@ -379,7 +380,7 @@ public class UserController {
 
             int pIdx = 4;
             if (!password.isEmpty()) {
-                ps.setString(pIdx++, password);
+                ps.setString(pIdx++, PasswordUtil.hash(password));
             }
             ps.setInt(pIdx++, isActive ? 1 : 0);
             ps.setInt(pIdx, selectedUser.getUserId());
@@ -459,11 +460,12 @@ public class UserController {
 
         confirm.showAndWait().ifPresent(res -> {
             if (res == ButtonType.OK) {
-                String sql = "UPDATE users SET password_hash = '123' WHERE user_id = ?";
+                String sql = "UPDATE users SET password_hash = ? WHERE user_id = ?";
                 try {
                     Connection con = DBConnection.getConnection();
                     PreparedStatement ps = con.prepareStatement(sql);
-                    ps.setInt(1, selectedUser.getUserId());
+                    ps.setString(1, PasswordUtil.hash("123"));
+                    ps.setInt(2, selectedUser.getUserId());
                     ps.executeUpdate();
                     ps.close();
 

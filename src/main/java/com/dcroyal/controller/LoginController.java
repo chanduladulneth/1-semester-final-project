@@ -2,6 +2,7 @@ package com.dcroyal.controller;
 
 import com.dcroyal.db.DBConnection;
 import com.dcroyal.model.User;
+import com.dcroyal.util.PasswordUtil;
 import com.dcroyal.util.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,25 +53,51 @@ public class LoginController {
         try {
             Connection con = DBConnection.getConnection();
 
-            // SQL: find user with matching username, password, and active status
+            // SQL: find active user by username, then verify the stored password hash
             // Also join with roles table to get the role name and code
-            String sql = "SELECT u.user_id, u.full_name, u.username, r.role_code, r.role_name " +
+            String sql = "SELECT u.user_id, u.full_name, u.username, u.password_hash, r.role_code, r.role_name " +
                          "FROM users u " +
                          "JOIN roles r ON u.role_id = r.role_id " +
-                         "WHERE u.username = ? AND u.password_hash = ? AND u.is_active = 1";
+                         "WHERE u.username = ? AND u.is_active = 1";
 
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, username);
-            pst.setString(2, password);
 
             ResultSet rs = pst.executeQuery();
 
             // If a matching user was found
             if (rs.next()) {
+                int userId = rs.getInt("user_id");
+                String storedHash = rs.getString("password_hash");
+                boolean passwordMatches = PasswordUtil.verify(password, storedHash);
+
+                // One-time upgrade for accounts created before password hashing.
+                if (!passwordMatches && storedHash != null && storedHash.equals(password)) {
+                    passwordMatches = true;
+                    String upgradeSql = "UPDATE users SET password_hash = ? WHERE user_id = ?";
+                    try (PreparedStatement upgrade = con.prepareStatement(upgradeSql)) {
+                        upgrade.setString(1, PasswordUtil.hash(password));
+                        upgrade.setInt(2, userId);
+                        upgrade.executeUpdate();
+                    }
+                }
+
+                if (!passwordMatches) {
+                    rs.close();
+                    pst.close();
+                    errorLabel.setText("");
+                    errorLabel.setVisible(false);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Sign-in failed");
+                    alert.setHeaderText("Invalid credentials");
+                    alert.setContentText("The username or password is incorrect. Please try again.");
+                    alert.showAndWait();
+                    return;
+                }
 
                 // Create a User object with the data from the database
                 User loggedInUser = new User(
-                        rs.getInt("user_id"),
+                        userId,
                         rs.getString("full_name"),
                         rs.getString("username"),
                         rs.getString("role_code"),
