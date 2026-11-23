@@ -26,25 +26,25 @@ import java.sql.SQLException;
 public class LoginController {
 
     // Connect FXML elements to Java variables
-    @FXML private TextField     emailField;
+    @FXML private TextField     usernameField;
     @FXML private PasswordField passwordField;
     @FXML private Button        loginButton;
     @FXML private Label         errorLabel;
 
     /**
      * This method runs when the Login button is clicked.
-     * It checks the email and password against the database.
+     * It checks the username and password against the database.
      */
     @FXML
     private void handleLogin() {
 
         // Get what the user typed
-        String email    = emailField.getText().trim();
+        String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
         // Simple check - don't allow empty fields
-        if (email.isEmpty() || password.isEmpty()) {
-            showError("Please enter your email and password.");
+        if (username.isEmpty() || password.isEmpty()) {
+            showError("Please enter your username and password.");
             return;
         }
 
@@ -52,15 +52,15 @@ public class LoginController {
         try {
             Connection con = DBConnection.getConnection();
 
-            // SQL: find user with matching email, password, and active status
+            // SQL: find user with matching username, password, and active status
             // Also join with roles table to get the role name and code
-            String sql = "SELECT u.user_id, u.full_name, u.email, r.role_code, r.role_name " +
+            String sql = "SELECT u.user_id, u.full_name, u.username, r.role_code, r.role_name " +
                          "FROM users u " +
                          "JOIN roles r ON u.role_id = r.role_id " +
-                         "WHERE u.email = ? AND u.password_hash = ? AND u.is_active = 1";
+                         "WHERE u.username = ? AND u.password_hash = ? AND u.is_active = 1";
 
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, email);
+            pst.setString(1, username);
             pst.setString(2, password);
 
             ResultSet rs = pst.executeQuery();
@@ -72,7 +72,7 @@ public class LoginController {
                 User loggedInUser = new User(
                         rs.getInt("user_id"),
                         rs.getString("full_name"),
-                        rs.getString("email"),
+                        rs.getString("username"),
                         rs.getString("role_code"),
                         rs.getString("role_name")
                 );
@@ -94,7 +94,7 @@ public class LoginController {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Sign-in failed");
                 alert.setHeaderText("Invalid credentials");
-                alert.setContentText("The email or password is incorrect. Please try again.");
+                alert.setContentText("The username or password is incorrect. Please try again.");
                 alert.showAndWait();
             }
 

@@ -9,15 +9,15 @@ public class User {
 
     private int    userId;
     private String fullName;
-    private String email;
+    private String username;
     private String roleCode;   // e.g., OWNER, MANAGER, COUNTER_STAFF
     private String roleName;   // e.g., Owner, Manager, Counter Staff
 
     // Constructor
-    public User(int userId, String fullName, String email, String roleCode, String roleName) {
+    public User(int userId, String fullName, String username, String roleCode, String roleName) {
         this.userId   = userId;
         this.fullName = fullName;
-        this.email    = email;
+        this.username = username;
         this.roleCode = roleCode;
         this.roleName = roleName;
     }
@@ -25,13 +25,13 @@ public class User {
     // Getters
     public int    getUserId()   { return userId;   }
     public String getFullName() { return fullName; }
-    public String getEmail()    { return email;    }
+    public String getUsername() { return username; }
     public String getRoleCode() { return roleCode; }
     public String getRoleName() { return roleName; }
 
     // Setters
     public void setFullName(String fullName) { this.fullName = fullName; }
-    public void setEmail(String email)       { this.email    = email;    }
+    public void setUsername(String username) { this.username = username; }
 
     /**
      * Returns the first letters of first and last name as initials.

@@ -9,18 +9,18 @@ public class CustomerTM {
     private String customerCode;
     private String fullName;
     private String phone;
-    private String email;
+    private String username;
     private String city;
     private String address;
 
     public CustomerTM() {
     }
 
-    public CustomerTM(String customerCode, String fullName, String phone, String email, String city, String address) {
+    public CustomerTM(String customerCode, String fullName, String phone, String username, String city, String address) {
         this.customerCode = customerCode;
         this.fullName = fullName;
         this.phone = phone;
-        this.email = email;
+        this.username = username;
         this.city = city;
         this.address = address;
     }
@@ -49,12 +49,12 @@ public class CustomerTM {
         this.phone = phone;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getCity() {

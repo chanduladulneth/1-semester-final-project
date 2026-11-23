@@ -9,7 +9,7 @@ public class UserTM {
 
     private int     userId;
     private String  fullName;
-    private String  email;
+    private String  username;
     private int     roleId;
     private String  roleCode;
     private String  roleName;
@@ -17,11 +17,11 @@ public class UserTM {
     private boolean active;
     private String  createdAt;
 
-    public UserTM(int userId, String fullName, String email, int roleId,
+    public UserTM(int userId, String fullName, String username, int roleId,
                   String roleCode, String roleName, boolean active, String createdAt) {
         this.userId    = userId;
         this.fullName  = fullName;
-        this.email     = email;
+        this.username  = username;
         this.roleId    = roleId;
         this.roleCode  = roleCode;
         this.roleName  = roleName;
@@ -36,8 +36,8 @@ public class UserTM {
     public String  getFullName()             { return fullName; }
     public void    setFullName(String name)  { this.fullName = name; }
 
-    public String  getEmail()                { return email; }
-    public void    setEmail(String email)    { this.email = email; }
+    public String  getUsername()             { return username; }
+    public void    setUsername(String username) { this.username = username; }
 
     public int     getRoleId()               { return roleId; }
     public void    setRoleId(int roleId)     { this.roleId = roleId; }

@@ -10,7 +10,7 @@ public class EmployeeTM {
     private int     userId;
     private String  fullName;
     private String  roleName;
-    private String  email;
+    private String  username;
     private String  phone;
     private String  nic;
     private double  basicSalary;
@@ -18,12 +18,12 @@ public class EmployeeTM {
     private String  status; // "ACTIVE" or "INACTIVE"
     private boolean active;
 
-    public EmployeeTM(int userId, String fullName, String roleName, String email,
+    public EmployeeTM(int userId, String fullName, String roleName, String username,
                       String phone, String nic, double basicSalary, boolean active) {
         this.userId               = userId;
         this.fullName             = fullName;
         this.roleName             = roleName;
-        this.email                = email;
+        this.username             = username;
         this.phone                = (phone != null && !phone.isEmpty()) ? phone : "-";
         this.nic                  = (nic != null && !nic.isEmpty()) ? nic : "-";
         this.basicSalary          = basicSalary;
@@ -41,8 +41,8 @@ public class EmployeeTM {
     public String  getRoleName()             { return roleName; }
     public void    setRoleName(String role)  { this.roleName = role; }
 
-    public String  getEmail()                { return email; }
-    public void    setEmail(String email)    { this.email = email; }
+    public String  getUsername()             { return username; }
+    public void    setUsername(String username) { this.username = username; }
 
     public String  getPhone()                { return phone; }
     public void    setPhone(String phone)    { this.phone = phone; }

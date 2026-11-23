@@ -116,7 +116,7 @@
                                         <!-- Table Filters -->
                                         <HBox alignment="CENTER_LEFT" spacing="12.0">
                                             <TextField fx:id="searchField" prefHeight="38.0" prefWidth="260.0"
-                                                       promptText="🔍  Search by name, role, email, phone..."
+                                                       promptText="🔍  Search by name, role, username, phone..."
                                                        style="-fx-background-color: #FDFCFA; -fx-border-color: #E6E0D3; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 12; -fx-font-size: 13px;" />
 
                                             <Label style="-fx-font-size: 12px; -fx-font-weight: 600; -fx-text-fill: #62656F;"
@@ -131,7 +131,7 @@
                                                 <TableColumn fx:id="colId" prefWidth="50.0" text="ID" />
                                                 <TableColumn fx:id="colName" prefWidth="150.0" text="Full Name" />
                                                 <TableColumn fx:id="colRole" prefWidth="130.0" text="Role" />
-                                                <TableColumn fx:id="colEmail" prefWidth="150.0" text="Email" />
+                                                <TableColumn fx:id="colUsername" prefWidth="150.0" text="Username" />
                                                 <TableColumn fx:id="colPhone" prefWidth="100.0" text="Phone" />
                                                 <TableColumn fx:id="colNic" prefWidth="100.0" text="NIC" />
                                                 <TableColumn fx:id="colBasicSalary" prefWidth="110.0" text="Basic Salary" />
@@ -159,8 +159,8 @@
 
                                         <HBox spacing="10.0">
                                             <VBox spacing="4.0" HBox.hgrow="ALWAYS">
-                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="EMAIL (LOGIN) *" />
-                                                <TextField fx:id="emailField" prefHeight="34.0" promptText="staff@dcroyal.lk"
+                                                <Label style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;" text="USERNAME *" />
+                                                <TextField fx:id="usernameField" prefHeight="34.0" promptText="Enter username"
                                                            style="-fx-background-color: white; -fx-border-color: #CFC8B8; -fx-border-radius: 6; -fx-background-radius: 6;" />
                                             </VBox>
                                             <VBox spacing="4.0" HBox.hgrow="ALWAYS">

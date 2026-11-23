@@ -1,10 +1,6 @@
 package com.dcroyal.tm;
 
-/**
- * AttendanceTM.java
- * Table Model for displaying employee attendance records in the TableView.
- * Student-level clean Java code with standard properties.
- */
+
 public class AttendanceTM {
 
     private int    attendanceId;
