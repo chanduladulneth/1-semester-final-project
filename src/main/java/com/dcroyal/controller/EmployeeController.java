@@ -5,6 +5,7 @@ import com.dcroyal.dto.EmployeeDTO;
 import com.dcroyal.model.User;
 import com.dcroyal.tm.AttendanceTM;
 import com.dcroyal.tm.EmployeeTM;
+import com.dcroyal.util.PasswordUtil;
 import com.dcroyal.util.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -446,7 +447,7 @@ public class EmployeeController {
             ps.setInt(1, roleId);
             ps.setString(2, name);
             ps.setString(3, username);
-            ps.setString(4, password);
+            ps.setString(4, PasswordUtil.hash(password));
             ps.setString(5, phone.isEmpty() ? null : phone);
             ps.setString(6, nic.isEmpty() ? null : nic);
             ps.setDouble(7, basicSalary);
@@ -519,7 +520,7 @@ public class EmployeeController {
 
             int paramIndex = 4;
             if (!password.isEmpty()) {
-                ps.setString(paramIndex++, password);
+                ps.setString(paramIndex++, PasswordUtil.hash(password));
             }
             ps.setString(paramIndex++, phone.isEmpty() ? null : phone);
             ps.setString(paramIndex++, nic.isEmpty() ? null : nic);
@@ -603,11 +604,12 @@ public class EmployeeController {
 
         confirm.showAndWait().ifPresent(res -> {
             if (res == ButtonType.OK) {
-                String sql = "UPDATE users SET password_hash = '123' WHERE user_id = ?";
+                String sql = "UPDATE users SET password_hash = ? WHERE user_id = ?";
                 try {
                     Connection con = DBConnection.getConnection();
                     PreparedStatement ps = con.prepareStatement(sql);
-                    ps.setInt(1, selectedEmployee.getUserId());
+                    ps.setString(1, PasswordUtil.hash("123"));
+                    ps.setInt(2, selectedEmployee.getUserId());
                     ps.executeUpdate();
                     ps.close();
 

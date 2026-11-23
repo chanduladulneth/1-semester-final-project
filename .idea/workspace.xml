@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e59e9348-5087-4be7-9ea1-75c0febad8fb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/dcroyal/image/DC_Royal_Printing_500x500.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/tm/AttendanceTM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/tm/AttendanceTM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/dcroyal/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/dcroyal/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/dcroyal/view/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/dcroyal/view/login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/dcroyal/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/dcroyal/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/dcroyal/tm/AttendanceTM.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/dcroyal/tm/AttendanceTM.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/dcroyal/view/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/dcroyal/view/login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/EmployeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/UserController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +148,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/dcroyal/controller/LoginController.java</url>
-          <line>46</line>
+          <line>47</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
