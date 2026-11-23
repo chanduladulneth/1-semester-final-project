@@ -5,21 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e59e9348-5087-4be7-9ea1-75c0febad8fb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/dcroyal/image/DC_Royal_Printing_500x500.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/EmployeeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/dto/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/dto/CustomerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/dto/EmployeeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/dto/EmployeeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/tm/CustomerTM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/tm/CustomerTM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/tm/EmployeeTM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/tm/EmployeeTM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/tm/UserTM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/tm/UserTM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/dcroyal/view/CustomerView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/dcroyal/view/CustomerView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/dcroyal/view/EmployeeView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/dcroyal/view/EmployeeView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/dcroyal/view/UserView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/dcroyal/view/UserView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/dcroyal/tm/AttendanceTM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/dcroyal/tm/AttendanceTM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/dcroyal/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/dcroyal/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/dcroyal/view/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/dcroyal/view/login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/dcroyal/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/dcroyal/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/dcroyal/tm/AttendanceTM.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/dcroyal/tm/AttendanceTM.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/dcroyal/view/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/dcroyal/view/login.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +22,65 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000000206397395" />
+      <entry key="S2" value="1.0120071997425117" />
+      <entry key="S5" value="1.1848710157355264" />
+      <entry key="S10" value="1.562712703988836" />
+      <entry key="S30" value="2.816971609228296" />
+      <entry key="S60" value="4.281846255203588" />
+      <entry key="M2" value="6.888014762230981" />
+      <entry key="M5" value="14.364345609630588" />
+      <entry key="M10" value="22.304932700191838" />
+      <entry key="M15" value="27.55617516505091" />
+      <entry key="M30" value="37.29533428387724" />
+      <entry key="H1" value="46.02709057209071" />
+      <entry key="H2" value="52.37489518896186" />
+      <entry key="H4" value="58.46612492667351" />
+      <entry key="D1" value="80.37041754867407" />
+      <entry key="W1" value="90.04658686450382" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="6.059284801126038E-290" />
+      <entry key="MS500" value="1.4339797251486544E-58" />
+      <entry key="S2" value="3.833532558330185E-15" />
+      <entry key="S5" value="2.317256418622551E-6" />
+      <entry key="S10" value="0.002112722229752063" />
+      <entry key="S30" value="0.2372149063364146" />
+      <entry key="S60" value="0.9394394425624779" />
+      <entry key="M2" value="2.1801715388705802" />
+      <entry key="M5" value="4.269178413795411" />
+      <entry key="M10" value="5.747227092729394" />
+      <entry key="M15" value="6.51856655331811" />
+      <entry key="M30" value="7.702704968104396" />
+      <entry key="H1" value="8.630438203729739" />
+      <entry key="H2" value="9.243853976711492" />
+      <entry key="H4" value="9.601515459598799" />
+      <entry key="D1" value="9.930500732701212" />
+      <entry key="W1" value="9.98999247271668" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.9012504626108302" />
+      <entry key="MS500" value="0.9794203175789539" />
+      <entry key="S2" value="1.0067267249725445" />
+      <entry key="S5" value="1.1821990539426785" />
+      <entry key="S10" value="1.5622454678108075" />
+      <entry key="S30" value="3.0224633177486644" />
+      <entry key="S60" value="5.147908868758663" />
+      <entry key="M2" value="8.964357306440155" />
+      <entry key="M5" value="18.52341929017532" />
+      <entry key="M10" value="27.96498485210965" />
+      <entry key="M15" value="34.00412714379293" />
+      <entry key="M30" value="44.952553560001604" />
+      <entry key="H1" value="54.630657238962705" />
+      <entry key="H2" value="61.60390685789976" />
+      <entry key="H4" value="68.05968245157374" />
+      <entry key="D1" value="90.29935973404568" />
+      <entry key="W1" value="100.0363431022885" />
+    </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0,
@@ -41,12 +94,14 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Launcher.executor": "Run",
+    "Application.Main.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "git-widget-placeholder": "dev",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/software project/DCRoyalPrinting/src/main/resources/com/dcroyal/image",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -54,6 +109,14 @@
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\software project\DCRoyalPrinting\src\main\resources\com\dcroyal\image" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\software project\DCRoyalPrinting\src\main\resources\com\dcroyal\image" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
@@ -84,5 +147,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/dcroyal/controller/LoginController.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

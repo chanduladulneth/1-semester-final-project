@@ -19,8 +19,8 @@ public class Main extends Application {
                 Main.class.getResource("/com/dcroyal/view/login.fxml")
         );
 
-        // Create scene with login screen (900x600 size)
-        Scene scene = new Scene(loader.load(), 900, 600);
+        // Use the dimensions defined by the login FXML.
+        Scene scene = new Scene(loader.load());
 
         // Apply the CSS stylesheet to the scene
         scene.getStylesheets().add(

@@ -52,34 +52,28 @@
     -fx-border-radius: 0;
 }
 
-/* ---- Login Button (Magenta) ---- */
-.btn-login {
-    -fx-background-color: #B8134F;
-    -fx-text-fill: white;
-    -fx-font-weight: 700;
-    -fx-font-size: 15px;
-    -fx-background-radius: 12;
-    -fx-cursor: hand;
-    -fx-pref-height: 46px;
-}
-.btn-login:hover {
-    -fx-background-color: #9A0F42;
+/* ---- Login Button ---- */
+.bg-login{
+    -fx-background-color:linear-gradient(to bottom right, #141E30, #243B55);
 }
 
-/* ---- Input Fields ---- */
-.text-field, .password-field {
-    -fx-background-color: white;
-    -fx-border-color: #CFC8B8;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-border-width: 1;
-    -fx-padding: 0 12;
-    -fx-font-size: 14px;
-    -fx-pref-height: 46px;
+
+.textfield-design {
+    -fx-background-color: transparent;
+    -fx-border-color: #2c6eb5;
+    -fx-border-width:0px 0px 3px 0px;
+    -fx-padding:3px 3px 3px 25px;
+    -fx-text-inner-color:#fff;
 }
-.text-field:focused, .password-field:focused {
-    -fx-border-color: #07768F;
-    -fx-border-width: 2;
+
+.button-login{
+    -fx-background-color:#2c6eb5;
+    -fx-cursor:hand;
+    -fx-border-radius:100px;
+}
+
+.button-login:hover{
+    -fx-background-color: #5aa0ea;
 }
 
 /* ---- Chart General Styling ---- */
