@@ -185,7 +185,10 @@ public class SidebarController {
             navigateTo("/com/dcroyal/view/DesignView.fxml", "DC Royal Printing — Design Management & Approvals");
         } else if (screen.equals("PRINT_QUEUE")) {
             navigateTo("/com/dcroyal/view/PrintQueueView.fxml", "DC Royal Printing — Production Print Queue");
-        } else if (screen.equals("INVENTORY") || screen.equals("STOCK_REQUEST") || screen.equals("STOCK_REPORT")) {
+        } else if (screen.equals("STOCK_REQUEST")) {
+            navigateTo("/com/dcroyal/view/StockRequestView.fxml",
+                    "DC Royal Printing — Stock Request");
+        } else if (screen.equals("INVENTORY") || screen.equals("STOCK_REPORT")) {
             navigateTo("/com/dcroyal/view/InventoryView.fxml", "DC Royal Printing — Inventory & QR Card Stock Tracking");
         } else if (screen.equals("PACKING") || screen.equals("PACK_ORDERS") || screen.equals("PACKING_REPORT")) {
             navigateTo("/com/dcroyal/view/PackingView.fxml", "DC Royal Printing — Packing & Delivery Management");
