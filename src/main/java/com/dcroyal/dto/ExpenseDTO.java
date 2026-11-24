@@ -1,10 +1,5 @@
 package com.dcroyal.dto;
 
-/**
- * ExpenseDTO.java
- * Data Transfer Object for expenses table.
- * Student-level clean Java code with standard getters/setters.
- */
 public class ExpenseDTO {
 
     private int     expenseId;

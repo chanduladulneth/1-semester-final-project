@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.dcroyal.controller.StockRequestController"
+    style="-fx-background-color: #F6F3EC;">
+
+    <left>
+        <fx:include source="Sidebar.fxml" fx:id="sidebar"/>
+    </left>
+
+    <center>
+        <BorderPane style="-fx-background-color: #F6F3EC;">
+            <top>
+                <HBox alignment="CENTER_LEFT"
+                      style="-fx-padding: 26 32 10 32; -fx-background-color: #F6F3EC;">
+                    <VBox spacing="4">
+                        <Label text="PRINTER OPERATOR"
+                               style="-fx-font-size: 11px; -fx-font-weight: 600; -fx-text-fill: #62656F;"/>
+                        <Label text="Stock Request"
+                               style="-fx-font-size: 32px; -fx-font-weight: 700; -fx-text-fill: #15171F;"/>
+                        <Label text="Available stock - read only"
+                               style="-fx-font-size: 12px; -fx-text-fill: #62656F;"/>
+                    </VBox>
+                </HBox>
+            </top>
+
+            <center>
+                <VBox spacing="12"
+                      style="-fx-padding: 8 32 40 32;">
+                    <HBox alignment="CENTER_LEFT" spacing="12"
+                          style="-fx-background-color: white; -fx-background-radius: 14;
+                                 -fx-border-color: #E6E0D3; -fx-border-radius: 14;
+                                 -fx-padding: 14;">
+                        <Label text="Search Stock"
+                               style="-fx-font-size: 12px; -fx-font-weight: 700;"/>
+                        <TextField fx:id="searchField"
+                                   promptText="Search by SKU, item name or category"
+                                   prefWidth="360" prefHeight="36"
+                                   style="-fx-border-color: #E6E0D3; -fx-border-radius: 6;
+                                          -fx-padding: 0 10;"/>
+                    </HBox>
+
+                    <TableView fx:id="stockTable" VBox.vgrow="ALWAYS"
+                               style="-fx-background-color: white;
+                                      -fx-border-color: #E6E0D3;
+                                      -fx-border-radius: 10;">
+                        <columns>
+                            <TableColumn fx:id="colSku" text="SKU" prefWidth="140"/>
+                            <TableColumn fx:id="colName" text="Item Name" prefWidth="260"/>
+                            <TableColumn fx:id="colCategory" text="Category" prefWidth="180"/>
+                            <TableColumn fx:id="colStock" text="Available Stock" prefWidth="140"/>
+                            <TableColumn fx:id="colUnit" text="Unit" prefWidth="100"/>
+                            <TableColumn fx:id="colStatus" text="Status" prefWidth="140"/>
+                        </columns>
+                        <columnResizePolicy>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                        </columnResizePolicy>
+                    </TableView>
+                </VBox>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>
