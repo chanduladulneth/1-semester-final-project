@@ -1,3 +1,4 @@
 com\dcroyal\tm\package-info.class
 com\dcroyal\controller\LoginController.class
+com\dcroyal\controller\StockRequestController.class
 com\dcroyal\dto\package-info.class

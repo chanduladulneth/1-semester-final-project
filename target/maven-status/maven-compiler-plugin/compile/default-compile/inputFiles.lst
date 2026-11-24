@@ -19,6 +19,7 @@ D:\software project\DCRoyalPrinting\src\main\java\com\dcroyal\controller\Packing
 D:\software project\DCRoyalPrinting\src\main\java\com\dcroyal\controller\PrintQueueController.java
 D:\software project\DCRoyalPrinting\src\main\java\com\dcroyal\controller\SalaryController.java
 D:\software project\DCRoyalPrinting\src\main\java\com\dcroyal\controller\SidebarController.java
+D:\software project\DCRoyalPrinting\src\main\java\com\dcroyal\controller\StockRequestController.java
 D:\software project\DCRoyalPrinting\src\main\java\com\dcroyal\controller\UserController.java
 D:\software project\DCRoyalPrinting\src\main\java\com\dcroyal\db\DBConnection.java
 D:\software project\DCRoyalPrinting\src\main\java\com\dcroyal\dto\AttendanceDTO.java

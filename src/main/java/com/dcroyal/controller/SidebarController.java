@@ -245,6 +245,7 @@ public class SidebarController {
             Stage stage = (Stage) navBox.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle(title);
+            stage.setMaximized(true);
 
         } catch (Exception e) {
             System.out.println("Navigation error to " + fxmlPath + ": " + e.getMessage());
