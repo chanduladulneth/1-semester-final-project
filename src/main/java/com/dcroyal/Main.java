@@ -5,10 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * DC Royal Printing — Desktop Management System
- * Main entry point of the application
- */
+
 public class Main extends Application {
 
     @Override

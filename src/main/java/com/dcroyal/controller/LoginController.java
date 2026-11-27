@@ -166,12 +166,10 @@ public class LoginController {
                 case "DELIVERY_STAFF":
                     fxmlFile = "/com/dcroyal/view/DeliveryDashboard.fxml";
                     break;
-                case "NETWORK_ADMIN":
-                    fxmlFile = "/com/dcroyal/view/NetworkDashboard.fxml";
-                    break;
                 default:
-                    fxmlFile = "/com/dcroyal/view/OwnerDashboard.fxml";
-                    break;
+                    Session.clearSession();
+                    showError("This account has an unsupported role. Please contact an administrator.");
+                    return;
             }
 
             // Load the chosen dashboard FXML

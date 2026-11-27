@@ -269,9 +269,9 @@
 
                                             <Separator />
 
-                                            <Label style="-fx-font-weight: 700; -fx-font-size: 12px; -fx-text-fill: #07768F;" text="6. PACKING, DELIVERY, INVENTORY &amp; NETWORK ADMIN" />
+                                            <Label style="-fx-font-weight: 700; -fx-font-size: 12px; -fx-text-fill: #07768F;" text="6. PACKING, DELIVERY &amp; INVENTORY STAFF" />
                                             <Label style="-fx-font-size: 11px; -fx-text-fill: #464955;"
-                                                   text="Dedicated role dashboards for package sealing, island-wide driver manifests with auto-SMS, stock management, and Zabbix network monitoring." wrapText="true" />
+                                                   text="Package sealing, island-wide driver manifests with auto-SMS, and stock management." wrapText="true" />
                                         </VBox>
                                     </VBox>
 

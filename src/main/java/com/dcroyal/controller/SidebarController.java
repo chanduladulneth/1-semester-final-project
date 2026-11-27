@@ -143,16 +143,9 @@ public class SidebarController {
                     {"📄   Delivery Report","DELIVERY_REPORT"},
                     {"🚪   Logout",       "LOGOUT"}
                 };
-            case "NETWORK_ADMIN":
-                return new String[][]{
-                    {"🏠   Dashboard",    "DASHBOARD"},
-                    {"🌐   Network Monitor","NETWORK_MONITOR"},
-                    {"🚪   Logout",       "LOGOUT"}
-                };
             default:
                 return new String[][]{
-                    {"🏠   Dashboard", "DASHBOARD"},
-                    {"🚪   Logout",    "LOGOUT"}
+                    {"🚪   Logout", "LOGOUT"}
                 };
         }
     }
@@ -224,8 +217,9 @@ public class SidebarController {
             case "INVENTORY_STAFF": fxmlFile = "/com/dcroyal/view/InventoryDashboard.fxml"; break;
             case "PACKING_STAFF":   fxmlFile = "/com/dcroyal/view/PackingDashboard.fxml"; break;
             case "DELIVERY_STAFF":  fxmlFile = "/com/dcroyal/view/DeliveryDashboard.fxml"; break;
-            case "NETWORK_ADMIN":   fxmlFile = "/com/dcroyal/view/NetworkDashboard.fxml"; break;
-            default:                fxmlFile = "/com/dcroyal/view/OwnerDashboard.fxml"; break;
+            default:
+                handleLogout();
+                return;
         }
 
         navigateTo(fxmlFile, "DC Royal Printing — " + user.getRoleName() + " Dashboard");
